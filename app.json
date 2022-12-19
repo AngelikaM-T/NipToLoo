@@ -20,6 +20,10 @@
     "ios": {
       "supportsTablet": true
     },
+    "bundleIdentifier": "com.southcoders.locationfinder",
+    "config": {
+      "googleMapsApiKey": "AIzaSyBnu71NLFgm-R1gAWCFqK15U5bPWiArmDo"
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
