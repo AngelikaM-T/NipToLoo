@@ -26,10 +26,6 @@ interface Coords {
   longitude: number;
 }
 
-interface MyLocation {
-  coords: Coords;
-}
-
 export default function App() {
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
   const [location, setLocation] = useState<Coords | null>(null);
@@ -37,8 +33,8 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
+      let stuff = await Location.requestForegroundPermissionsAsync();
+      if (stuff.status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
@@ -68,6 +64,12 @@ export default function App() {
         style={StyleSheet.absoluteFillObject}
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
+        region={{
+          latitude: location?.latitude!,
+          longitude: location?.longitude!,
+          latitudeDelta: 0.056866,
+          longitudeDelta: 0.054757,
+        }}
       >
         {toiletLocations.map((location, index) => (
           <Marker
