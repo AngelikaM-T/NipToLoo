@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import axios from "axios";
+import AppLoader from "./components/AppLoader";
+import { fetchLocations } from "./config/api/api"
 
 interface ToiletLocation {
   lat: number;
@@ -30,6 +31,7 @@ export default function App() {
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
   const [location, setLocation] = useState<Coords | null>(null);
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
+  const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
@@ -45,44 +47,38 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axios.get<{ results: Toilet[] }>(
-          `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${location?.latitude}%2C${location?.longitude}&query=toilet&key=AIzaSyDFKThqSRUAWN85xGITOvRB1RPYm44N4Bc`
-        );
-        setToiletLocations(response.data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchLocations();
-  }, []);
+    setLoadingToilets(true);
+    fetchLocations(location).then((retreivedToilets) => {
+      setToiletLocations(retreivedToilets!)
+      setLoadingToilets(false);
+    });
+  }, [location]);
 
   return (
-    <View style={styles.container}>
-      <MapView
-        style={StyleSheet.absoluteFillObject}
-        provider={PROVIDER_GOOGLE}
-        showsUserLocation={true}
-        region={{
-          latitude: location?.latitude!,
-          longitude: location?.longitude!,
-          latitudeDelta: 0.056866,
-          longitudeDelta: 0.054757,
-        }}
-      >
-        {toiletLocations.map((location, index) => (
-          <Marker
-            style={styles.marker}
-            key={index}
-            coordinate={{
-              latitude: location.geometry.location.lat,
-              longitude: location.geometry.location.lng,
-            }}
-          />
-        ))}
-      </MapView>
-    </View>
+    <>
+      {loadingToilets ? (
+        <AppLoader />
+      ) : (
+        <View style={styles.container}>
+          <MapView
+            style={StyleSheet.absoluteFillObject}
+            provider={PROVIDER_GOOGLE}
+            showsUserLocation={true}
+          >
+            {toiletLocations.map((location, index) => (
+              <Marker
+                style={styles.marker}
+                key={index}
+                coordinate={{
+                  latitude: location.geometry.location.lat,
+                  longitude: location.geometry.location.lng,
+                }}
+              />
+            ))}
+          </MapView>
+        </View>
+      )}
+    </>
   );
 }
 
