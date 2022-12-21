@@ -6,7 +6,7 @@ const AppLoader = () => {
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>    
       <LottieView source={require("../assets/spinner.json")} autoPlay loop />
-      {/* <Text style={styles.loadingText}>Loading toilets...</Text> */}
+      <Text style={styles.loadingText}>Loading toilets...</Text>
     </View>
   );
 };

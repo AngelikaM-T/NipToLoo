@@ -4,7 +4,11 @@ import { StyleSheet, Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import AppLoader from "./components/AppLoader";
-import { fetchLocations } from "./config/api/api"
+import { fetchLocations } from "./config/api/api";
+import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import { LoginScreen } from "./screens/login/login.screen";
+import { RegisterScreen } from "./screens/register/register.screen";
+import AppNavigator from "./navigation/AppNavigator";
 
 interface ToiletLocation {
   lat: number;
@@ -32,6 +36,7 @@ export default function App() {
   const [location, setLocation] = useState<Coords | null>(null);
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
+  const [userLogin, setUserLogin] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -49,7 +54,7 @@ export default function App() {
   useEffect(() => {
     setLoadingToilets(true);
     fetchLocations(location).then((retreivedToilets) => {
-      setToiletLocations(retreivedToilets!)
+      setToiletLocations(retreivedToilets!);
       setLoadingToilets(false);
     });
   }, [location]);
@@ -58,7 +63,7 @@ export default function App() {
     <>
       {loadingToilets ? (
         <AppLoader />
-      ) : (
+      ) : userLogin ? (
         <View style={styles.container}>
           <MapView
             style={StyleSheet.absoluteFillObject}
@@ -77,6 +82,10 @@ export default function App() {
             ))}
           </MapView>
         </View>
+      ) : (
+        <PaperProvider theme={theme}>
+          <AppNavigator />
+        </PaperProvider>
       )}
     </>
   );
@@ -93,3 +102,12 @@ const styles = StyleSheet.create({
     borderWidth: 10,
   },
 });
+
+export const theme = {
+  ...DefaultTheme,
+  colors: {
+      ...DefaultTheme.colors,
+      primary: "#855983",
+      background: "transparent"
+  }
+}
