@@ -12,8 +12,8 @@ const PlaceSearch = ({ setLocation }) => {
     Geocoder.from(data.description).then((json) => {
       const newLocation = json.results[0].geometry.location;
       const newLocationObj = {
-        latitude: newLocation.lat,
-        longitude: newLocation.lng,
+        latitude: newLocation ? newLocation.lat! : 0,
+        longitude: newLocation ? newLocation.lng! : 0,
       };
       setLocation(newLocationObj);
     });
