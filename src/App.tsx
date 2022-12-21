@@ -120,8 +120,8 @@ export default function App() {
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             region={{
-              latitude: location?.latitude!,
-              longitude: location?.longitude!,
+              latitude: location ? location.latitude! : 0,
+              longitude: location ? location.longitude! : 0,
               latitudeDelta: 0.056866,
               longitudeDelta: 0.054757,
             }}
@@ -142,15 +142,15 @@ export default function App() {
             ))}
             <Marker
               coordinate={{
-                latitude: location?.latitude!,
-                longitude: location?.longitude!,
+                latitude: location ? location.latitude! : 0,
+                longitude: location ? location.longitude! : 0,
               }}
               pinColor="blue"
             />
             <Circle
               center={{
-                latitude: location?.latitude!,
-                longitude: location?.longitude!,
+                latitude: location ? location.latitude! : 0,
+                longitude: location ? location.longitude! : 0,
               }}
               radius={800}
               strokeWidth={2}
