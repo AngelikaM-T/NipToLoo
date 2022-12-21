@@ -36,7 +36,7 @@ export default function App() {
   const [location, setLocation] = useState<Coords | null>(null);
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
-  const [userLogin, setUserLogin] = useState<boolean>(false);
+  const [userLogin, setUserLogin] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
