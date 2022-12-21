@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps";
 import * as Location from "expo-location";
 import AppLoader from "./components/AppLoader";
-import { fetchLocations } from "./config/api/api"
+import { fetchLocations } from "./config/api/api";
+import PlaceSearch from "./components/PlaceSearch";
 
 interface ToiletLocation {
   lat: number;
@@ -49,7 +50,7 @@ export default function App() {
   useEffect(() => {
     setLoadingToilets(true);
     fetchLocations(location).then((retreivedToilets) => {
-      setToiletLocations(retreivedToilets!)
+      setToiletLocations(retreivedToilets!);
       setLoadingToilets(false);
     });
   }, [location]);
@@ -64,6 +65,12 @@ export default function App() {
             style={StyleSheet.absoluteFillObject}
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
+            region={{
+              latitude: location?.latitude!,
+              longitude: location?.longitude!,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
           >
             {toiletLocations.map((location, index) => (
               <Marker
@@ -75,7 +82,25 @@ export default function App() {
                 }}
               />
             ))}
+            <Marker
+              coordinate={{
+                latitude: location?.latitude!,
+                longitude: location?.longitude!,
+              }}
+              pinColor="blue"
+            />
+            <Circle
+              center={{
+                latitude: location?.latitude!,
+                longitude: location?.longitude!,
+              }}
+              radius={800}
+              strokeWidth={2}
+              strokeColor="rgba(45, 33, 202, 0.1)"
+              fillColor="rgba(45, 33, 202, 0.1)"
+            />
           </MapView>
+          <PlaceSearch setLocation={setLocation} />
         </View>
       )}
     </>
