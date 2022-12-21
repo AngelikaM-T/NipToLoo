@@ -20,6 +20,7 @@ import MapView, {
 import * as Location from "expo-location";
 import AppLoader from "./components/AppLoader";
 import { fetchLocations } from "./config/api/api";
+import PlaceSearch from "./components/PlaceSearch";
 
 interface ToiletLocation {
   lat: number;
@@ -130,8 +131,8 @@ export default function App() {
                 style={styles.marker}
                 key={index}
                 coordinate={{
-                  latitude: location.geometry.location.lat,
-                  longitude: location.geometry.location.lng,
+                  latitude: location ? location.geometry.location.lat! : 0,
+                  longitude: location ? location.geometry.location.lng! : 0,
                 }}
                 title={location.name}
                 description="Press here for more details"
@@ -139,6 +140,23 @@ export default function App() {
                 <Callout tooltip={true} onPress={toggleToiletCard} />
               </Marker>
             ))}
+            <Marker
+              coordinate={{
+                latitude: location?.latitude!,
+                longitude: location?.longitude!,
+              }}
+              pinColor="blue"
+            />
+            <Circle
+              center={{
+                latitude: location?.latitude!,
+                longitude: location?.longitude!,
+              }}
+              radius={800}
+              strokeWidth={2}
+              strokeColor="rgba(45, 33, 202, 0.1)"
+              fillColor="rgba(45, 33, 202, 0.1)"
+            />
           </MapView>
           <Overlay
             isVisible={toiletCardVisible}
@@ -168,6 +186,7 @@ export default function App() {
             <Text>Rating: {targetedToilet?.rating}</Text>
             <Button title="Go back" onPress={toggleReviewCard}></Button>
           </Overlay>
+          <PlaceSearch setLocation={setLocation} />
         </View>
       )}
     </>
