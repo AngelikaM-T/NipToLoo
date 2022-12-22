@@ -10,7 +10,7 @@ interface LoginScreenProps {
 
 export const LoginScreen = (props: LoginScreenProps) => {
 
-    const login = () => props.navigation.navigate("App");
+    const login = () => props.navigation.navigate("Home");
 
   return (
     <>
