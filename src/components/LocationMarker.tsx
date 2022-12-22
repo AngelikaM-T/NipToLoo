@@ -1,7 +1,6 @@
-import {  PROVIDER_GOOGLE,
-    Marker, Circle } from "react-native-maps";
+import { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps";
 
-const LocationMarker = () => {
+const LocationMarker = ({ location }) => {
   return (
     <>
       <Marker
@@ -24,6 +23,5 @@ const LocationMarker = () => {
     </>
   );
 };
-
 
 export default LocationMarker;
