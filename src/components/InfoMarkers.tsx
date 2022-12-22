@@ -1,40 +1,15 @@
-import React, { useState } from "react";
-import { Text, View, Linking } from "react-native";
+import React from "react";
+import { Text, View } from "react-native";
 import { Marker, Callout } from "react-native-maps";
-
-interface ToiletLocation {
-  lat: number;
-  lng: number;
-}
-
-interface Geometry {
-  location: ToiletLocation;
-  viewport: object;
-}
-
-interface Toilet {
-  photos?: any;
-  name: any;
-  rating: any;
-  geometry: Geometry;
-}
-
-interface Coords {
-  latitude: number;
-  longitude: number;
-}
 
 const InfoMarker = ({
   location,
   toiletLocations,
   index,
-  targetedToilet,
   toiletCardVisible,
-  reviewCardVisible,
   markerCoords,
   setTargetedToilet,
   setToiletCardVisible,
-  setReviewCardVisible,
   setMarkerCoords,
 }) => {
   const markerHandler = (coords = null) => {
@@ -61,7 +36,6 @@ const InfoMarker = ({
 
   return (
     <Marker
-      key={index}
       coordinate={{
         latitude: location ? location.geometry.location.lat! : 0,
         longitude: location ? location.geometry.location.lng! : 0,

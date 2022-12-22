@@ -138,33 +138,14 @@ export default function App() {
                 location={location}
                 toiletLocations={toiletLocations}
                 index={index}
-                targetedToilet={targetedToilet}
                 toiletCardVisible={toiletCardVisible}
-                reviewCardVisible={reviewCardVisible}
                 markerCoords={markerCoords}
                 setTargetedToilet={setTargetedToilet}
                 setToiletCardVisible={setToiletCardVisible}
-                setReviewCardVisible={setReviewCardVisible}
                 setMarkerCoords={setMarkerCoords}
+                key={index}
               />
             ))}
-            <Marker
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              pinColor="blue"
-            ></Marker>
-            <Circle
-              center={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              radius={800}
-              strokeWidth={2}
-              strokeColor="rgba(45, 33, 202, 0.1)"
-              fillColor="rgba(45, 33, 202, 0.1)"
-            />
           </MapView>
 
           <Overlay
