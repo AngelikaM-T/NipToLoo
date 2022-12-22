@@ -1,7 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import { StyleSheet, View } from "react-native";
 import * as Location from "expo-location";
 import AppLoader from "./components/AppLoader";
 import { fetchLocations } from "./config/api/api";
@@ -9,6 +7,10 @@ import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import { LoginScreen } from "./screens/login/login.screen";
 import { RegisterScreen } from "./screens/register/register.screen";
 import AppNavigator from "./navigation/AppNavigator";
+import PlaceSearch from "./components/PlaceSearch";
+import LocationMarker from "./components/LocationMarker";
+import Overlays from "./components/Overlays";
+import ToiletMap from "./components/MapView";
 
 interface ToiletLocation {
   lat: number;
@@ -21,6 +23,7 @@ interface Geometry {
 }
 
 interface Toilet {
+  photos?: any;
   name: any;
   rating: any;
   geometry: Geometry;
@@ -33,10 +36,30 @@ interface Coords {
 
 export default function App() {
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
-  const [location, setLocation] = useState<Coords | null>(null);
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
   const [userLogin, setUserLogin] = useState<boolean>(true);
+  const [targetedToilet, setTargetedToilet] = useState(null);
+  const [toiletCardVisible, setToiletCardVisible] = useState(false);
+  const [reviewCardVisible, setReviewCardVisible] = useState(false);
+  const [markerCoords, setMarkerCoords] = useState({});
+  const [location, setLocation] = useState<Coords>({
+    latitude: 53.483959,
+    longitude: -2.244644,
+  });
+
+  const stateObj = {
+    toiletCardVisible,
+    targetedToilet,
+    reviewCardVisible,
+    setToiletCardVisible,
+    setReviewCardVisible,
+    location,
+    toiletLocations,
+    setTargetedToilet,
+    markerCoords,
+    setMarkerCoords,
+  };
 
   useEffect(() => {
     (async () => {
@@ -45,7 +68,6 @@ export default function App() {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location.coords);
     })();
@@ -58,29 +80,15 @@ export default function App() {
       setLoadingToilets(false);
     });
   }, [location]);
-
   return (
     <>
       {loadingToilets ? (
         <AppLoader />
       ) : userLogin ? (
         <View style={styles.container}>
-          <MapView
-            style={StyleSheet.absoluteFillObject}
-            provider={PROVIDER_GOOGLE}
-            showsUserLocation={true}
-          >
-            {toiletLocations.map((location, index) => (
-              <Marker
-                style={styles.marker}
-                key={index}
-                coordinate={{
-                  latitude: location.geometry.location.lat,
-                  longitude: location.geometry.location.lng,
-                }}
-              />
-            ))}
-          </MapView>
+          <ToiletMap stateObj={stateObj} />
+          <Overlays stateObj={stateObj} />
+          <PlaceSearch setLocation={setLocation} />
         </View>
       ) : (
         <PaperProvider theme={theme}>
@@ -90,7 +98,6 @@ export default function App() {
     </>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -98,16 +105,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  marker: {
-    borderWidth: 10,
-  },
 });
 
 export const theme = {
   ...DefaultTheme,
   colors: {
-      ...DefaultTheme.colors,
-      primary: "#855983",
-      background: "transparent"
-  }
-}
+    ...DefaultTheme.colors,
+    primary: "#855983",
+    background: "transparent",
+  },
+};
