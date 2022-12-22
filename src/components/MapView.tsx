@@ -1,16 +1,19 @@
 import { StyleSheet } from "react-native";
 import MapView from "react-native-maps";
 import InfoMarker from "./InfoMarkers";
+import LocationMarker from "./LocationMarker";
 
-const ToiletMap = ({
-  location,
-  toiletLocations,
-  toiletCardVisible,
-  markerCoords,
-  setTargetedToilet,
-  setToiletCardVisible,
-  setMarkerCoords,
-}) => {
+const ToiletMap = ({ stateObj }) => {
+  const {
+    location,
+    toiletLocations,
+    toiletCardVisible,
+    markerCoords,
+    setTargetedToilet,
+    setToiletCardVisible,
+    setMarkerCoords,
+  } = stateObj;
+
   return (
     <MapView
       style={StyleSheet.absoluteFillObject}
@@ -36,6 +39,7 @@ const ToiletMap = ({
           key={index}
         />
       ))}
+      <LocationMarker location={location} />
     </MapView>
   );
 };

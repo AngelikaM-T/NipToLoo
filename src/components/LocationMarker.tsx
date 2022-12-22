@@ -1,4 +1,4 @@
-import { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps";
+import { Marker, Circle } from "react-native-maps";
 
 const LocationMarker = ({ location }) => {
   return (

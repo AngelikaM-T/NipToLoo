@@ -2,16 +2,17 @@ import React from "react";
 import { Linking, StyleSheet, Text } from "react-native";
 import { Button, Overlay } from "@rneui/base";
 
-const Overlays = ({
-  toiletCardVisible,
-  targetedToilet,
-  reviewCardVisible,
-  setToiletCardVisible,
-  setReviewCardVisible,
-  location,
-  toiletLocations,
-  setTargetedToilet,
-}) => {
+const Overlays = ({ stateObj }) => {
+  const {
+    toiletCardVisible,
+    targetedToilet,
+    reviewCardVisible,
+    setToiletCardVisible,
+    setReviewCardVisible,
+    location,
+    toiletLocations,
+    setTargetedToilet,
+  } = stateObj;
   const toggleReviewCard = () => {
     setToiletCardVisible(!toiletCardVisible);
     setReviewCardVisible(!reviewCardVisible);

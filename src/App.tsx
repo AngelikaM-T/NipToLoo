@@ -43,6 +43,19 @@ export default function App() {
     longitude: -2.244644,
   });
 
+  const stateObj = {
+    toiletCardVisible,
+    targetedToilet,
+    reviewCardVisible,
+    setToiletCardVisible,
+    setReviewCardVisible,
+    location,
+    toiletLocations,
+    setTargetedToilet,
+    markerCoords,
+    setMarkerCoords,
+  };
+
   useEffect(() => {
     (async () => {
       let stuff = await Location.requestForegroundPermissionsAsync();
@@ -50,7 +63,6 @@ export default function App() {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location.coords);
     })();
@@ -69,26 +81,8 @@ export default function App() {
         <AppLoader />
       ) : (
         <View style={styles.container}>
-          <ToiletMap
-            location={location}
-            toiletLocations={toiletLocations}
-            toiletCardVisible={toiletCardVisible}
-            markerCoords={markerCoords}
-            setTargetedToilet={setTargetedToilet}
-            setToiletCardVisible={setToiletCardVisible}
-            setMarkerCoords={setMarkerCoords}
-          />
-          <LocationMarker location={location} />
-          <Overlays
-            toiletCardVisible={toiletCardVisible}
-            targetedToilet={targetedToilet}
-            reviewCardVisible={reviewCardVisible}
-            setToiletCardVisible={setToiletCardVisible}
-            setReviewCardVisible={setReviewCardVisible}
-            location={location}
-            toiletLocations={toiletLocations}
-            setTargetedToilet={setTargetedToilet}
-          />
+          <ToiletMap stateObj={stateObj} />
+          <Overlays stateObj={stateObj} />
           <PlaceSearch setLocation={setLocation} />
         </View>
       )}
