@@ -3,6 +3,10 @@ import { StyleSheet, View } from "react-native";
 import * as Location from "expo-location";
 import AppLoader from "./components/AppLoader";
 import { fetchLocations } from "./config/api/api";
+import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import { LoginScreen } from "./screens/login/login.screen";
+import { RegisterScreen } from "./screens/register/register.screen";
+import AppNavigator from "./navigation/AppNavigator";
 import PlaceSearch from "./components/PlaceSearch";
 import LocationMarker from "./components/LocationMarker";
 import Overlays from "./components/Overlays";
@@ -34,6 +38,7 @@ export default function App() {
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
+  const [userLogin, setUserLogin] = useState<boolean>(true);
   const [targetedToilet, setTargetedToilet] = useState(null);
   const [toiletCardVisible, setToiletCardVisible] = useState(false);
   const [reviewCardVisible, setReviewCardVisible] = useState(false);
@@ -79,12 +84,16 @@ export default function App() {
     <>
       {loadingToilets ? (
         <AppLoader />
-      ) : (
+      ) : userLogin ? (
         <View style={styles.container}>
           <ToiletMap stateObj={stateObj} />
           <Overlays stateObj={stateObj} />
           <PlaceSearch setLocation={setLocation} />
         </View>
+      ) : (
+        <PaperProvider theme={theme}>
+          <AppNavigator />
+        </PaperProvider>
       )}
     </>
   );
@@ -97,3 +106,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#855983",
+    background: "transparent",
+  },
+};
