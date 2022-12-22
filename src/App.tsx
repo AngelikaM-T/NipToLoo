@@ -63,7 +63,6 @@ export default function App() {
       setLoadingToilets(false);
     });
   }, [location]);
-
   return (
     <>
       {loadingToilets ? (
