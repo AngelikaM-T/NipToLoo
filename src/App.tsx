@@ -10,7 +10,7 @@ import AppNavigator from "./navigation/AppNavigator";
 import PlaceSearch from "./components/PlaceSearch";
 import LocationMarker from "./components/LocationMarker";
 import Overlays from "./components/Overlays";
-import ToiletMap from "./components/MapView";
+import ToiletMap from "./components/ToiletMap";
 
 interface ToiletLocation {
   lat: number;

@@ -5,7 +5,6 @@ import { Marker, Callout } from "react-native-maps";
 const InfoMarker = ({
   location,
   toiletLocations,
-  index,
   toiletCardVisible,
   markerCoords,
   setTargetedToilet,

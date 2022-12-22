@@ -16,7 +16,6 @@ const Overlays = ({ stateObj }) => {
   const toggleReviewCard = () => {
     setToiletCardVisible(!toiletCardVisible);
     setReviewCardVisible(!reviewCardVisible);
-    console.log(reviewCardVisible);
   };
 
   const getWalkingDirections = () => {

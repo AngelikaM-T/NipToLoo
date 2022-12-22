@@ -30,7 +30,6 @@ const ToiletMap = ({ stateObj }) => {
         <InfoMarker
           location={location}
           toiletLocations={toiletLocations}
-          index={index}
           toiletCardVisible={toiletCardVisible}
           markerCoords={markerCoords}
           setTargetedToilet={setTargetedToilet}
