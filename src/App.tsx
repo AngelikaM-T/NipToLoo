@@ -9,18 +9,21 @@ import {
   Pressable,
   TextInput,
   Linking,
+  TouchableOpacity,
 } from "react-native";
-import { Button, Overlay } from "@rneui/base";
+import { Button, Icon, Overlay } from "@rneui/base";
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
   Callout,
   Circle,
+  CalloutSubview,
 } from "react-native-maps";
 import * as Location from "expo-location";
 import AppLoader from "./components/AppLoader";
 import { fetchLocations } from "./config/api/api";
 import PlaceSearch from "./components/PlaceSearch";
+import InfoMarker from "./components/InfoMarkers";
 
 interface ToiletLocation {
   lat: number;
@@ -46,35 +49,21 @@ interface Coords {
 
 export default function App() {
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
-  const [location, setLocation] = useState<Coords | null>(null);
+  const [location, setLocation] = useState<Coords>({
+    latitude: 53.483959,
+    longitude: -2.244644,
+  });
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
   const [targetedToilet, setTargetedToilet] = useState(null);
   const [toiletCardVisible, setToiletCardVisible] = useState(false);
   const [reviewCardVisible, setReviewCardVisible] = useState(false);
-
-  const toggleToiletCard = (e = null) => {
-    setToiletCardVisible(!toiletCardVisible);
-
-    let matchingToilet;
-
-    if (toiletCardVisible === false) {
-      for (let i = 0; i < toiletLocations.length; i++) {
-        if (
-          e.nativeEvent.coordinate.longitude ===
-            toiletLocations[i].geometry.location.lng &&
-          e.nativeEvent.coordinate.latitude ===
-            toiletLocations[i].geometry.location.lat
-        ) {
-          matchingToilet = toiletLocations[i];
-        }
-      }
-      setTargetedToilet(matchingToilet);
-    }
-  };
+  const [markerCoords, setMarkerCoords] = useState({});
 
   const toggleReviewCard = () => {
+    setToiletCardVisible(!toiletCardVisible);
     setReviewCardVisible(!reviewCardVisible);
+    console.log(reviewCardVisible);
   };
 
   const getWalkingDirections = () => {
@@ -86,6 +75,24 @@ export default function App() {
     const queryString = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
 
     return Linking.openURL(queryString);
+  };
+
+  const toggleToiletCard = (coords = null) => {
+    setToiletCardVisible(!toiletCardVisible);
+
+    let matchingToilet;
+
+    if (toiletCardVisible === false) {
+      for (let i = 0; i < toiletLocations.length; i++) {
+        if (
+          coords.longitude === toiletLocations[i].geometry.location.lng &&
+          coords.latitude === toiletLocations[i].geometry.location.lat
+        ) {
+          matchingToilet = toiletLocations[i];
+        }
+      }
+      setTargetedToilet(matchingToilet);
+    }
   };
 
   useEffect(() => {
@@ -120,37 +127,38 @@ export default function App() {
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             region={{
-              latitude: location ? location.latitude! : 0,
-              longitude: location ? location.longitude! : 0,
+              latitude: location.latitude,
+              longitude: location.longitude,
               latitudeDelta: 0.056866,
               longitudeDelta: 0.054757,
             }}
           >
             {toiletLocations.map((location, index) => (
-              <Marker
-                style={styles.marker}
-                key={index}
-                coordinate={{
-                  latitude: location ? location.geometry.location.lat! : 0,
-                  longitude: location ? location.geometry.location.lng! : 0,
-                }}
-                title={location.name}
-                description="Press here for more details"
-              >
-                <Callout tooltip={true} onPress={toggleToiletCard} />
-              </Marker>
+              <InfoMarker
+                location={location}
+                toiletLocations={toiletLocations}
+                index={index}
+                targetedToilet={targetedToilet}
+                toiletCardVisible={toiletCardVisible}
+                reviewCardVisible={reviewCardVisible}
+                markerCoords={markerCoords}
+                setTargetedToilet={setTargetedToilet}
+                setToiletCardVisible={setToiletCardVisible}
+                setReviewCardVisible={setReviewCardVisible}
+                setMarkerCoords={setMarkerCoords}
+              />
             ))}
             <Marker
               coordinate={{
-                latitude: location ? location.latitude! : 0,
-                longitude: location ? location.longitude! : 0,
+                latitude: location.latitude,
+                longitude: location.longitude,
               }}
               pinColor="blue"
-            />
+            ></Marker>
             <Circle
               center={{
-                latitude: location ? location.latitude! : 0,
-                longitude: location ? location.longitude! : 0,
+                latitude: location.latitude,
+                longitude: location.longitude,
               }}
               radius={800}
               strokeWidth={2}
@@ -158,6 +166,7 @@ export default function App() {
               fillColor="rgba(45, 33, 202, 0.1)"
             />
           </MapView>
+
           <Overlay
             isVisible={toiletCardVisible}
             onBackdropPress={toggleToiletCard}
@@ -180,7 +189,7 @@ export default function App() {
           <Overlay
             isVisible={reviewCardVisible}
             onBackdropPress={toggleReviewCard}
-            overlayStyle={styles.container2}
+            overlayStyle={styles.reviewList}
           >
             <Text>Name: {targetedToilet?.name}</Text>
             <Text>Rating: {targetedToilet?.rating}</Text>
@@ -200,10 +209,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  marker: {
-    borderWidth: 10,
-  },
-
   container2: {
     backgroundColor: "white",
     borderColor: "black",
@@ -211,6 +216,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     width: 250,
     height: 400,
+  },
+
+  reviewList: {
+    backgroundColor: "white",
+    borderColor: "black",
+    // color: "white",
+    borderWidth: 2,
+    width: 250,
+    height: 400,
+    zIndex: 10,
   },
   // Callout bubble
   bubble: {
