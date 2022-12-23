@@ -1,11 +1,19 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Appbar, TextInput, Button } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
 
-export const RegisterScreen = () => {
+interface RegisterScreenProps {
+  navigation: any;
+}
+
+export const RegisterScreen = (props: RegisterScreenProps) => {
+  const navigation = useNavigation();
+
+  const register = () => props.navigation.navigate("Login");
+
   return (
     <>
       <SafeAreaView>
@@ -35,10 +43,14 @@ export const RegisterScreen = () => {
               }
             />
             <TextInput label="Phone number" keyboardType="phone-pad" />
-            <Button mode="contained" style={registerStyle.button}>
+            <Button
+              onPress={register}
+              mode="contained"
+              style={registerStyle.button}
+            >
               Register
             </Button>
-              <BrandName />
+            <BrandName />
           </View>
         </ScrollView>
       </SafeAreaView>

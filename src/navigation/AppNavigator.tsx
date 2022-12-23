@@ -1,21 +1,26 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import  { NavigationContainer } from '@react-navigation/native';
-import {LoginScreen} from '../screens/login/login.screen';
-import App from '../App';
-import {HomeScreen} from '../screens/home/home.screen';
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { LoginScreen } from "../screens/login/LoginScreen";
+import { HomeScreen } from "../screens/home/HomeScreen";
+import { RegisterScreen } from "../screens/register/RegisterScreen";
 
-const { Navigator, Screen } = createNativeStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  Login: undefined;
+  Register: undefined;
+};
+
+const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => (
-
-
-    <NavigationContainer>
-        <Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
-            <Screen name="Login" component={LoginScreen}></Screen>
-            <Screen name="App" component={HomeScreen}></Screen>
-        </Navigator>
-    </NavigationContainer>
-)
+  <NavigationContainer>
+    <Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+      <Screen name="Home" component={HomeScreen}></Screen>
+      <Screen name="Login" component={LoginScreen}></Screen>
+      <Screen name="Register" component={RegisterScreen}></Screen>
+    </Navigator>
+  </NavigationContainer>
+);
 
 export default AppNavigator;

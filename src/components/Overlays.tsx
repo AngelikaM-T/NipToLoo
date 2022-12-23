@@ -1,8 +1,9 @@
 import React from "react";
 import { Linking, StyleSheet, Text } from "react-native";
 import { Button, Overlay } from "@rneui/base";
+import LoginButton from "./LoginButton";
 
-const Overlays = ({ stateObj }) => {
+const Overlays = ({ stateObj, navigation }) => {
   const {
     toiletCardVisible,
     targetedToilet,
@@ -70,6 +71,7 @@ const Overlays = ({ stateObj }) => {
       >
         <Text>Name: {targetedToilet?.name}</Text>
         <Text>Rating: {targetedToilet?.rating}</Text>
+        <LoginButton navigation={navigation}/>
         <Button title="Go back" onPress={toggleReviewCard}></Button>
       </Overlay>
     </>

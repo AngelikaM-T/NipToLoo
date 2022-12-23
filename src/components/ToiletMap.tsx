@@ -3,7 +3,13 @@ import MapView from "react-native-maps";
 import InfoMarker from "./InfoMarkers";
 import LocationMarker from "./LocationMarker";
 
-const ToiletMap = ({ stateObj }) => {
+interface LoginScreenProps {
+  navigation: any;
+}
+
+
+const ToiletMap = ({ stateObj }, props: LoginScreenProps) => {
+  
   const {
     location,
     toiletLocations,
