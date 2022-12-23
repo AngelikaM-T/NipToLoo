@@ -31,12 +31,8 @@ interface Coords {
   longitude: number;
 }
 
-interface LoginScreenProps {
-  navigation: any;
-}
 
-export const HomeScreen = (props: LoginScreenProps) => {
-  const handlePress = () => props.navigation.navigate("Login");
+export const HomeScreen = () => {
 
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
@@ -50,6 +46,11 @@ export const HomeScreen = (props: LoginScreenProps) => {
     latitude: 53.483959,
     longitude: -2.244644,
   });
+  const [currentLocation, setCurrentLocation] = useState<Coords>({
+    latitude: null,
+    longitude: null,
+  });
+
 
   const stateObj = {
     toiletCardVisible,
@@ -62,7 +63,9 @@ export const HomeScreen = (props: LoginScreenProps) => {
     setTargetedToilet,
     markerCoords,
     setMarkerCoords,
-  };
+    setLocation,
+    currentLocation
+    };
 
   useEffect(() => {
     (async () => {
@@ -73,6 +76,7 @@ export const HomeScreen = (props: LoginScreenProps) => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location.coords);
+      setCurrentLocation(location.coords);
     })();
   }, []);
 
@@ -90,7 +94,7 @@ export const HomeScreen = (props: LoginScreenProps) => {
       <View style={styles.container}>
         <ToiletMap stateObj={stateObj} />
         <Overlays stateObj={stateObj} />
-        <PlaceSearch setLocation={setLocation} />
+        <PlaceSearch stateObj={stateObj} />
       </View>
     </>
   );

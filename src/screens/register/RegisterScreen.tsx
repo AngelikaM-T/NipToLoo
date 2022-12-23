@@ -1,7 +1,6 @@
 import React from "react";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Appbar, TextInput, Button } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
 
