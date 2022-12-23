@@ -1,10 +1,9 @@
 import { View } from "react-native";
 import { Button } from "react-native-paper";
 
-
-
-const LoginButton = ({LoginButtonProps}) => {
-  const loginScreen = () => LoginButtonProps.navigation.navigate("Login");
+const LoginButton = (props: {navigation: any}) => {
+  const {navigation} = props
+  const loginScreen = () => navigation.navigate('Login');
 
   return (
     <View>

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { Card, TextInput, Button } from "react-native-paper";
@@ -5,35 +6,45 @@ import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
 
 interface LoginScreenProps {
-    navigation: any;
+  navigation: any;
 }
 
 export const LoginScreen = (props: LoginScreenProps) => {
+  const navigation = useNavigation();
 
-    const login = () => props.navigation.navigate("Home");
+  const login = () => props.navigation.navigate("Home");
 
-    const registerPage = () => props.navigation.navigate("Register")
+  const registerPage = () => props.navigation.navigate("Register");
 
   return (
     <>
       <SafeAreaView style={loginStyle.screenContent}>
         <View style={loginStyle.loginContent}>
-        <View style={loginStyle.view}>
-          <Card>
-            <Card.Content>
-              <Header title="Log in" />
-              <TextInput label="Email" keyboardType="email-address"></TextInput>
-              <TextInput label="Password" secureTextEntry={true}></TextInput>
-              <Button uppercase={false} style={loginStyle.cardButton}>
-                Forgot email/password
-              </Button>
-              <Button onPress={login } mode="contained" style={loginStyle.cardButton}>
-                Log in
-              </Button>
-              <Button onPress={registerPage} style={loginStyle.cardButton}>Register</Button>
-            </Card.Content>
-          </Card>
-        </View>
+          <View style={loginStyle.view}>
+            <Card>
+              <Card.Content>
+                <Header title="Log in" />
+                <TextInput
+                  label="Email"
+                  keyboardType="email-address"
+                ></TextInput>
+                <TextInput label="Password" secureTextEntry={true}></TextInput>
+                <Button uppercase={false} style={loginStyle.cardButton}>
+                  Forgot email/password
+                </Button>
+                <Button
+                  onPress={login}
+                  mode="contained"
+                  style={loginStyle.cardButton}
+                >
+                  Log in
+                </Button>
+                <Button onPress={registerPage} style={loginStyle.cardButton}>
+                  Register
+                </Button>
+              </Card.Content>
+            </Card>
+          </View>
         </View>
         <BrandName />
       </SafeAreaView>
@@ -41,16 +52,15 @@ export const LoginScreen = (props: LoginScreenProps) => {
   );
 };
 
-
 const loginStyle = StyleSheet.create({
-screenContent: {
+  screenContent: {
     display: "flex",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
     backgroundColor: "#855983",
-},
+  },
   loginContent: {
     display: "flex",
     flex: 5,

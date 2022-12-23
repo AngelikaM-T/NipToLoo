@@ -6,8 +6,8 @@ import PlaceSearch from "../../components/PlaceSearch";
 import LocationMarker from "../../components/LocationMarker";
 import Overlays from "../../components/Overlays";
 import ToiletMap from "../../components/ToiletMap";
-import { Button } from "react-native-paper";
 import AppLoader from "../../components/AppLoader";
+import { NavigationContext, useNavigation } from "@react-navigation/native";
 
 interface ToiletLocation {
   lat: number;
@@ -31,8 +31,8 @@ interface Coords {
   longitude: number;
 }
 
-
 export const HomeScreen = () => {
+  const navigation = useNavigation();
 
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
@@ -51,7 +51,6 @@ export const HomeScreen = () => {
     longitude: null,
   });
 
-
   const stateObj = {
     toiletCardVisible,
     targetedToilet,
@@ -64,8 +63,8 @@ export const HomeScreen = () => {
     markerCoords,
     setMarkerCoords,
     setLocation,
-    currentLocation
-    };
+    currentLocation,
+  };
 
   useEffect(() => {
     (async () => {
@@ -93,8 +92,8 @@ export const HomeScreen = () => {
       {loadingToilets ? <AppLoader /> : null}
       <View style={styles.container}>
         <ToiletMap stateObj={stateObj} />
-        <Overlays stateObj={stateObj} />
-        <PlaceSearch stateObj={stateObj} />
+        <Overlays stateObj={stateObj} navigation={navigation}/>
+        <PlaceSearch stateObj={stateObj} navigation={navigation} />
       </View>
     </>
   );

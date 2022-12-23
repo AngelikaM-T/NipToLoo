@@ -1,10 +1,16 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
+ 
 
 export const Header = (props: HeaderParams) => {
+
+  const goBack = () => {
+
+  }
+
   return (
     <Appbar>
-      <Appbar.BackAction />
+      <Appbar.BackAction onPress={goBack}/>
       <Appbar.Content title={props.title} />
     </Appbar>
   );

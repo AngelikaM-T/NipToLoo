@@ -5,10 +5,11 @@ import { GOOGLE_API_KEY } from "../../environments";
 import Geocoder from "react-native-geocoding";
 import CurrentLocationButton from "./CurrentLocationButton";
 import LoginButton from "./LoginButton";
+import { NavigationContext } from "@react-navigation/native";
 
 Geocoder.init(GOOGLE_API_KEY);
 
-const PlaceSearch = ({ stateObj }, {LoginButtonProps}) => {
+const PlaceSearch = ({ stateObj, navigation }) => {
   const { setLocation, currentLocation } = stateObj;
   const onPressHandler = (data, details = null) => {
     Geocoder.from(data.description).then((json) => {
@@ -37,7 +38,7 @@ const PlaceSearch = ({ stateObj }, {LoginButtonProps}) => {
         currentLocation={currentLocation}
         setLocation={setLocation}
       />
-      <LoginButton LoginButtonProps={LoginButtonProps}/>
+      <LoginButton navigation={navigation} />
     </View>
   );
 };
@@ -54,10 +55,9 @@ const styles = StyleSheet.create({
     width: "100%",
     top: 40,
     padding: 4,
-
   },
   searchContainer: {
-    width: '70%',
+    width: "70%",
     backgroundColor: "white",
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
