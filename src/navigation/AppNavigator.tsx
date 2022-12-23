@@ -13,10 +13,10 @@ const AppNavigator = () => (
 
 
     <NavigationContainer>
-        <Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+        <Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+            <Screen name="Home" component={HomeScreen}></Screen>
             <Screen name="Login" component={LoginScreen}></Screen>
             <Screen name="Register" component={RegisterScreen}></Screen>
-            <Screen name="Home" component={HomeScreen}></Screen>
         </Navigator>
     </NavigationContainer>
 )

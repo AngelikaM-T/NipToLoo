@@ -12,6 +12,8 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     const login = () => props.navigation.navigate("Home");
 
+    const registerPage = () => props.navigation.navigate("Register")
+
   return (
     <>
       <SafeAreaView style={loginStyle.screenContent}>
@@ -28,7 +30,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
               <Button onPress={login } mode="contained" style={loginStyle.cardButton}>
                 Log in
               </Button>
-              <Button style={loginStyle.cardButton}>Register</Button>
+              <Button onPress={registerPage} style={loginStyle.cardButton}>Register</Button>
             </Card.Content>
           </Card>
         </View>
