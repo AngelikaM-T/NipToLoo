@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import Geolocation from "@react-native-community/geolocation";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Button } from "react-native-paper";
-
 
 interface CurRegion {
   latitude: number;
@@ -12,20 +9,30 @@ interface CurRegion {
   longitudeDelta: number;
 }
 
-const CurrentLocationButton = ({currentLocation, setLocation}) => {
+const CurrentLocationButton = ({ currentLocation, setLocation }) => {
+  const onPressCurrentLocation = () => {
+    setLocation(currentLocation);
+  };
 
-      const onPressCurrentLocation = () => {
-        setLocation(currentLocation);
-      };
-
-      return (
-        <View>
-            <Button onPress={onPressCurrentLocation} mode="contained">
-              R
-            </Button>
-
-        </View>
-      )
+  return (
+    <View>
+      <TouchableOpacity onPress={onPressCurrentLocation}>
+        <Image
+          style={styles.buttonStyle}
+          source={require("../assets/CurrentLocation.png")}
+        />
+      </TouchableOpacity>
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  buttonStyle: {
+    width: 50,
+    height: 50,
+    margin: 1,
+    borderRadius: 8
+  },
+});
 
 export default CurrentLocationButton;
