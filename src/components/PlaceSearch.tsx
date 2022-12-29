@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_API_KEY } from "../../environments";
 import Geocoder from "react-native-geocoding";
-import CurrentLocationButton from "./CurrentLocationButton";
+import CurrentLocationButton from "./ResetLocationButton";
 import LoginButton from "./LoginButton";
 import { NavigationContext } from "@react-navigation/native";
 

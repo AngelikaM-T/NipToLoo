@@ -19,8 +19,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
   return (
     <>
       <SafeAreaView style={loginStyle.screenContent}>
+        <BrandName navigation={navigation}/>
         <View style={loginStyle.loginContent}>
-          <View style={loginStyle.view}>
+          <View style={loginStyle.card}>
             <Card>
               <Card.Content>
                 <Header title="Log in" />
@@ -46,7 +47,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
             </Card>
           </View>
         </View>
-        <BrandName />
       </SafeAreaView>
     </>
   );
@@ -59,17 +59,18 @@ const loginStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    backgroundColor: "#855983",
+    backgroundColor: "#9ec6cc",
   },
   loginContent: {
     display: "flex",
-    flex: 5,
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
   },
-  view: {
-    width: "80%",
+  card: {
+    width: "90%",
+    height: "100%",
   },
   cardButton: {
     margin: 2,

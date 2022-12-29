@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Button } from "react-native-paper";
+import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
 interface CurRegion {
   latitude: number;
@@ -16,10 +17,10 @@ const CurrentLocationButton = ({ currentLocation, setLocation }) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={onPressCurrentLocation}>
+      <TouchableOpacity style={styles.buttonStyle} onPress={onPressCurrentLocation}>
         <Image
-          style={styles.buttonStyle}
-          source={require("../assets/CurrentLocation.png")}
+          style={styles.iconStyle}
+          source={require("../assets/reset-location.png")}
         />
       </TouchableOpacity>
     </View>
@@ -28,10 +29,18 @@ const CurrentLocationButton = ({ currentLocation, setLocation }) => {
 
 const styles = StyleSheet.create({
   buttonStyle: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     width: 50,
     height: 50,
-    margin: 1,
-    borderRadius: 8
+  },
+  iconStyle: {
+    width: 50,
+    height: 50,
+    color: "white",
+    borderRadius: 20
   },
 });
 
