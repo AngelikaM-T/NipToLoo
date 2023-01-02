@@ -14,7 +14,7 @@ interface LoginScreenProps {
 export const LoginScreen = (props: LoginScreenProps) => {
   const navigation = useNavigation();
 
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm({ mode: "onBlur" });
 
   const login = () => props.navigation.navigate("Home");
 
@@ -46,7 +46,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
                   name="password"
                   placeholder="Password"
                   control={control}
-                  secureTextEntry={true}
                   rules={{
                     required: "Password is required",
                     minLength: {
