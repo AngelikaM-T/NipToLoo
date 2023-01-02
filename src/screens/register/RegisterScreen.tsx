@@ -14,7 +14,7 @@ interface RegisterScreenProps {
 export const RegisterScreen = (props: RegisterScreenProps) => {
   const navigation = useNavigation();
 
-  const { control, handleSubmit, watch } = useForm();
+  const { control, handleSubmit, watch } = useForm({ mode: "onBlur" });
   const pwd = watch("password");
 
   const registerNewUser = () => props.navigation.navigate("Login");
@@ -58,7 +58,6 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                       name="password"
                       placeholder="Password"
                       control={control}
-                      secureTextEntry={true}
                       rules={{
                         required: "Password is required",
                         minLength: {
@@ -78,7 +77,6 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                       name="confirm_password"
                       placeholder="Confirm password"
                       control={control}
-                      secureTextEntry={true}
                       rules={{
                         validate: (value) =>
                           value === pwd || "Passwords do not match",

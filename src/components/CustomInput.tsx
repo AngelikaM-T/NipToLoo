@@ -24,7 +24,7 @@ const CustomInput = ({ control, name, rules = {}, placeholder }) => {
               onBlur={onBlur}
               onChangeText={onChange}
               placeholder={placeholder}
-              secureTextEntry={secureTextEntry}
+              secureTextEntry={name.includes("password") && secureTextEntry ? (true) : (false)}
               style={[styles.input, {}]}
               right={
                 name.includes("password") ? (
