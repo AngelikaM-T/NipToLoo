@@ -34,7 +34,6 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                       name="name"
                       placeholder="Name"
                       control={control}
-                      secureTextEntry
                       rules={{
                         required: "Name is required",
                         pattern: {
@@ -47,7 +46,6 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                       name="email"
                       placeholder="Email"
                       control={control}
-                      secureTextEntry
                       rules={{
                         required: "Email is required",
                         pattern: {
@@ -60,7 +58,7 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                       name="password"
                       placeholder="Password"
                       control={control}
-                      secureTextEntry
+                      secureTextEntry={true}
                       rules={{
                         required: "Password is required",
                         minLength: {
@@ -80,7 +78,7 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                       name="confirm_password"
                       placeholder="Confirm password"
                       control={control}
-                      secureTextEntry
+                      secureTextEntry={true}
                       rules={{
                         validate: (value) =>
                           value === pwd || "Passwords do not match",

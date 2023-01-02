@@ -33,7 +33,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
                   name="username"
                   placeholder="Username"
                   control={control}
-                  secureTextEntry
                   rules={{
                     required: "Username is required",
                     pattern: {
@@ -47,7 +46,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                   name="password"
                   placeholder="Password"
                   control={control}
-                  secureTextEntry
+                  secureTextEntry={true}
                   rules={{
                     required: "Password is required",
                     minLength: {
