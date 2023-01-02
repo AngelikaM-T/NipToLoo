@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import { TextInput } from "react-native-paper";
 import { StyleSheet, View, Text } from "react-native";
 
-const CustomInput = ({
-  control,
-  name,
-  rules = {},
-  placeholder,
-  secureTextEntry = false,
-}) => {
+const CustomInput = ({ control, name, rules = {}, placeholder }) => {
+  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
+
   return (
     <Controller
       control={control}
@@ -33,8 +29,11 @@ const CustomInput = ({
               right={
                 name.includes("password") ? (
                   <TextInput.Icon
-                    icon="eye"
+                    icon={secureTextEntry ? "eye-off" : "eye"}
                     iconColor={styles.passwordIcon.color}
+                    onPress={() => {
+                      setSecureTextEntry(!secureTextEntry);
+                    }}
                   />
                 ) : null
               }
