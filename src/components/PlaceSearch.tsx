@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_API_KEY } from "../../environments";
 import Geocoder from "react-native-geocoding";
-import CurrentLocationButton from "./CurrentLocationButton";
+import CurrentLocationButton from "./ResetLocationButton";
 import LoginButton from "./LoginButton";
 import { NavigationContext } from "@react-navigation/native";
 
@@ -34,11 +34,15 @@ const PlaceSearch = ({ stateObj, navigation }) => {
           }}
         />
       </View>
-      <CurrentLocationButton
-        currentLocation={currentLocation}
-        setLocation={setLocation}
-      />
-      <LoginButton navigation={navigation} />
+      <View style={styles.buttons}>
+        <CurrentLocationButton
+          currentLocation={currentLocation}
+          setLocation={setLocation}
+        />
+      </View>
+      <View style={styles.buttons}>
+        <LoginButton navigation={navigation} />
+      </View>
     </View>
   );
 };
@@ -54,10 +58,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     top: 40,
-    padding: 4,
+    padding: 0,
   },
   searchContainer: {
-    width: "70%",
+    width: "60%",
     backgroundColor: "white",
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
@@ -65,6 +69,17 @@ const styles = StyleSheet.create({
     shadowRadius: 0.4,
     elevation: 4,
     borderRadius: 8,
+  },
+  buttons: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 0.4,
+    elevation: 4,
+    borderRadius: 8,
+    height: "100%"
   },
 });
 

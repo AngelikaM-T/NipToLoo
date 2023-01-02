@@ -7,7 +7,7 @@ import LocationMarker from "../../components/LocationMarker";
 import Overlays from "../../components/Overlays";
 import ToiletMap from "../../components/ToiletMap";
 import AppLoader from "../../components/AppLoader";
-import { NavigationContext, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 interface ToiletLocation {
   lat: number;

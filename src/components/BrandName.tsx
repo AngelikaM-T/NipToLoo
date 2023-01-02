@@ -1,34 +1,43 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
-import { Text, View, StyleSheet} from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export const BrandName = () => {
+export const BrandName = (props: { navigation: any }) => {
+  const { navigation } = props;
+
+  const goHome = () => navigation.navigate("Home");
+
   return (
-    <View style={brandStyle.content}>
-      <Text style={brandStyle.text}>Nip t' Loo</Text>
-      </View>
-
+    <View style={brandStyle.imageContainer}>
+      <TouchableOpacity onPress={goHome}>
+        <Image
+          style={brandStyle.img}
+          source={require("../assets/logo-5.png")}
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 
-
 const brandStyle = StyleSheet.create({
-    content: {
-        display: "flex",
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-        backgroundColor: "#e37b74",
-        borderRadius: 30,
-        paddingLeft: 5,
-        paddingRight: 5,
-        paddingBottom: 0,
-        paddingTop: 0,
-        marginBottom: 50
-    },
-    text: {
-        fontSize: 30,
-      color: "#ecdad0",
-    }
-  });
+  imageContainer: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: "10%",
+    paddingRight: "10%",
+    width: "100%",
+  },
+  img: {
+    flex: 1,
+    width: 300,
+    height: 300,
+    resizeMode: "cover",
+    borderRadius: 100,
+  },
+});

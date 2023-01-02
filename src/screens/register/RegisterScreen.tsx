@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, Card } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
+import CustomInput from "../../components/CustomInput";
 import { Header } from "../../components/Header";
+import { useForm } from "react-hook-form";
 
 interface RegisterScreenProps {
   navigation: any;
@@ -12,71 +14,126 @@ interface RegisterScreenProps {
 export const RegisterScreen = (props: RegisterScreenProps) => {
   const navigation = useNavigation();
 
-  const register = () => props.navigation.navigate("Login");
+  const { control, handleSubmit, watch } = useForm();
+  const pwd = watch("password");
+
+  const registerNewUser = () => props.navigation.navigate("Login");
 
   return (
-    <>
+    <View style={registerStyle.background}>
       <SafeAreaView>
         <ScrollView>
-          <Header title="Register" />
-          <View style={registerStyle.registerContent}>
-            <TextInput label="Name" />
-            <TextInput label="Email" keyboardType="email-address" />
-            <TextInput
-              label="Password"
-              secureTextEntry={true}
-              right={
-                <TextInput.Icon
-                  icon="eye"
-                  iconColor={registerStyle.icon.color}
-                />
-              }
-            />
-            <TextInput
-              label="Confirm password"
-              secureTextEntry={true}
-              right={
-                <TextInput.Icon
-                  icon="eye"
-                  iconColor={registerStyle.icon.color}
-                />
-              }
-            />
-            <TextInput label="Phone number" keyboardType="phone-pad" />
-            <Button
-              onPress={register}
-              mode="contained"
-              style={registerStyle.button}
-            >
-              Register
-            </Button>
-            <BrandName />
+          <View style={registerStyle.screenContent}>
+            <BrandName navigation={navigation} />
+            <View style={registerStyle.registerContent}>
+              <View style={registerStyle.card}>
+                <Card>
+                  <Card.Content>
+                    <Header title="Register" />
+                    <CustomInput
+                      name="name"
+                      placeholder="Name"
+                      control={control}
+                      secureTextEntry
+                      rules={{
+                        required: "Name is required",
+                        pattern: {
+                          value: /^[a-z ,.'-]+$/i,
+                          message: "Invalid name",
+                        },
+                      }}
+                    />
+                    <CustomInput
+                      name="email"
+                      placeholder="Email"
+                      control={control}
+                      secureTextEntry
+                      rules={{
+                        required: "Email is required",
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "Invalid email address",
+                        },
+                      }}
+                    />
+                    <CustomInput
+                      name="password"
+                      placeholder="Password"
+                      control={control}
+                      secureTextEntry
+                      rules={{
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message:
+                            "Password should be minimum 8 characters long",
+                        },
+                        pattern: {
+                          value:
+                            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+                          message:
+                            "Password must contain at least one number and one special character",
+                        },
+                      }}
+                    />
+                    <CustomInput
+                      name="confirm_password"
+                      placeholder="Confirm password"
+                      control={control}
+                      secureTextEntry
+                      rules={{
+                        validate: (value) =>
+                          value === pwd || "Passwords do not match",
+                      }}
+                    />
+                    <Button
+                      onPress={handleSubmit(registerNewUser)}
+                      mode="contained"
+                      style={registerStyle.button}
+                    >
+                      Register
+                    </Button>
+                  </Card.Content>
+                </Card>
+              </View>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
+    </View>
   );
 };
 
 const registerStyle = StyleSheet.create({
+  background: {
+    backgroundColor: "#9ec6cc",
+    height: "100%",
+  },
   screenContent: {
     display: "flex",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    backgroundColor: "#855983",
+  },
+  card: {
+    width: "90%",
+    height: "100%",
+    margin: 5,
   },
   registerContent: {
-    padding: 15,
-    paddingTop: 0,
+    display: "flex",
+    flex: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   icon: {
-    color: "#855983",
+    color: "#005691",
   },
   button: {
     margin: 15,
-    marginLeft: 0,
-    marginRight: 0,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
