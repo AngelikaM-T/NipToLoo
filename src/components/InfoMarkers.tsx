@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 import { Marker, Callout } from "react-native-maps";
+import { postToilet } from "../config/api/api";
 
 const InfoMarker = ({
   location,
@@ -12,6 +13,7 @@ const InfoMarker = ({
   setMarkerCoords,
 }) => {
   const markerHandler = (coords = null) => {
+    postToilet(location);
     setMarkerCoords(coords);
   };
 

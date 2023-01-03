@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     shadowRadius: 0.4,
     elevation: 4,
     borderRadius: 8,
-    height: "100%"
+    height: "100%",
   },
 });
 

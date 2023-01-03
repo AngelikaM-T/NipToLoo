@@ -31,3 +31,21 @@ export const fetchLocations = async (location: Coords | null = null) => {
     console.error(error);
   }
 };
+
+const toiletApi = axios.create({
+  baseURL: "https://cyan-cormorant-gear.cyclic.app/api",
+});
+
+export const postToilet = (toilet: Object) => {
+  return toiletApi.post(`/toilets`, toilet);
+};
+
+export const getReviewsByToilet = (toilet_id: String) => {
+  return toiletApi.get(`/toilets/${toilet_id}/reviews`).then((res) => {
+    return res.data.reviews;
+  });
+};
+
+export const postReviewsByToilet = (toilet_id: String, review: Object) => {
+  return toiletApi.post(`/toilets/${toilet_id}/reviews`, review);
+};

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Linking, StyleSheet, Text } from "react-native";
 import { Button, Overlay } from "@rneui/base";
+import { getReviewsByToilet } from "../config/api/api";
 import LoginButton from "./LoginButton";
 
+interface Reviews {
+  body: String;
+  username: String;
+  place_id: String;
+}
+
 const Overlays = ({ stateObj, navigation }) => {
+  const [reviews, setReviews] = useState<Reviews[]>([]);
   const {
     toiletCardVisible,
     targetedToilet,
@@ -47,6 +55,13 @@ const Overlays = ({ stateObj, navigation }) => {
       setTargetedToilet(matchingToilet);
     }
   };
+
+  useEffect(() => {
+    getReviewsByToilet(location.place_id).then((reviews) => {
+      setReviews(reviews!);
+    });
+  }, []);
+
   return (
     <>
       <Overlay
@@ -71,7 +86,7 @@ const Overlays = ({ stateObj, navigation }) => {
       >
         <Text>Name: {targetedToilet?.name}</Text>
         <Text>Rating: {targetedToilet?.rating}</Text>
-        <LoginButton navigation={navigation}/>
+        <LoginButton navigation={navigation} />
         <Button title="Go back" onPress={toggleReviewCard}></Button>
       </Overlay>
     </>
