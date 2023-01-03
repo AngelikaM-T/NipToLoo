@@ -11,6 +11,7 @@ Geocoder.init(GOOGLE_API_KEY);
 
 const PlaceSearch = ({ stateObj, navigation }) => {
   const { setLocation, currentLocation } = stateObj;
+
   const onPressHandler = (data, details = null) => {
     Geocoder.from(data.description).then((json) => {
       const newLocation = json.results[0].geometry.location;
@@ -27,11 +28,17 @@ const PlaceSearch = ({ stateObj, navigation }) => {
       <View style={styles.headerContainer}>
         <View style={styles.searchContainer}>
           <GooglePlacesAutocomplete
-            placeholder="Search"
+            placeholder="Enter Location"
             onPress={onPressHandler}
             query={{
               key: GOOGLE_API_KEY,
               language: "en",
+            }}
+            styles={{
+              listView: {
+                width: 368,
+                marginTop: 3,
+              },
             }}
           />
         </View>
@@ -58,14 +65,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     top: 50,
-    right: 60,
-    padding: 0,
-    marginLeft: 10,
-    paddingRight: 20,
-    paddingLeft: 20
   },
   searchContainer: {
-    width: "60%",
+    width: "70%",
     backgroundColor: "white",
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
@@ -73,16 +75,14 @@ const styles = StyleSheet.create({
     shadowRadius: 0.4,
     elevation: 4,
     borderRadius: 8,
+    right: 53,
   },
   buttonsContainer: {
     display: "flex",
-    flex: 1,
     flexDirection: "row",
-    flexWrap: "nowrap",
-    alignItems: "center",
     position: "absolute",
     top: 50,
-    right: 30,
+    right: 3,
   },
   buttons: {
     backgroundColor: "white",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   space: {
-    width: 5,
+    width: 3,
   },
 });
 
