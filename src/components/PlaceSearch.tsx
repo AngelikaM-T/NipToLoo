@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     width: "100%",
-    top: 40,
+    top: 50,
     right: 60,
     padding: 0,
     marginRight: 5,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flexWrap: "nowrap",
     alignItems: "center",
     position: "absolute",
-    top: 40,
+    top: 50,
     right: 30,
   },
   buttons: {
