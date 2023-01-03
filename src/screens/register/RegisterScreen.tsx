@@ -138,9 +138,6 @@ const registerStyle = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  icon: {
-    color: "#005691",
-  },
   button: {
     margin: 15,
     marginLeft: 10,

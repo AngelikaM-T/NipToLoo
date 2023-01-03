@@ -5,7 +5,7 @@ import LottieView from "lottie-react-native";
 const AppLoader = () => {
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <LottieView source={require("../assets/spinner.json")} autoPlay loop />
+      <LottieView source={require("../assets/loading-animation.json")} autoPlay loop />
       <Text style={styles.loadingText}>Loading toilets...</Text>
     </View>
   );

@@ -42,6 +42,7 @@ const InfoMarker = ({
       onPress={(e) => {
         markerHandler(e.nativeEvent.coordinate);
       }}
+      pinColor="#590074"
     >
       <Callout
         onPress={() => {

@@ -8,7 +8,7 @@ const LocationMarker = ({ location }) => {
           latitude: location.latitude,
           longitude: location.longitude,
         }}
-        pinColor="blue"
+        pinColor="#ffff00"
       ></Marker>
       <Circle
         center={{
