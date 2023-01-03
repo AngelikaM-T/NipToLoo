@@ -23,42 +23,44 @@ const PlaceSearch = ({ stateObj, navigation }) => {
   };
 
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.searchContainer}>
-        <GooglePlacesAutocomplete
-          placeholder="Search"
-          onPress={onPressHandler}
-          query={{
-            key: GOOGLE_API_KEY,
-            language: "en",
-          }}
-        />
+    <>
+      <View style={styles.headerContainer}>
+        <View style={styles.searchContainer}>
+          <GooglePlacesAutocomplete
+            placeholder="Search"
+            onPress={onPressHandler}
+            query={{
+              key: GOOGLE_API_KEY,
+              language: "en",
+            }}
+          />
+        </View>
       </View>
-      <View style={styles.buttons}>
-        <CurrentLocationButton
-          currentLocation={currentLocation}
-          setLocation={setLocation}
-        />
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttons}>
+          <CurrentLocationButton
+            currentLocation={currentLocation}
+            setLocation={setLocation}
+          />
+        </View>
+        <View style={styles.space} />
+        <View style={styles.buttons}>
+          <LoginButton navigation={navigation} />
+        </View>
       </View>
-      <View style={styles.buttons}>
-        <LoginButton navigation={navigation} />
-      </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   headerContainer: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    justifyContent: "space-evenly",
     alignItems: "center",
     position: "absolute",
     width: "100%",
     top: 40,
+    right: 60,
     padding: 0,
+    marginRight: 5,
   },
   searchContainer: {
     width: "60%",
@@ -70,8 +72,17 @@ const styles = StyleSheet.create({
     elevation: 4,
     borderRadius: 8,
   },
-  buttons: {
+  buttonsContainer: {
+    display: "flex",
+    flex: 1,
     flexDirection: "row",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    position: "absolute",
+    top: 40,
+    right: 30,
+  },
+  buttons: {
     backgroundColor: "white",
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
@@ -79,7 +90,9 @@ const styles = StyleSheet.create({
     shadowRadius: 0.4,
     elevation: 4,
     borderRadius: 8,
-    height: "100%"
+  },
+  space: {
+    width: 5,
   },
 });
 
