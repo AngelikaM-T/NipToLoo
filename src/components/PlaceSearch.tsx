@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
     top: 50,
     right: 60,
     padding: 0,
-    marginRight: 5,
+    marginLeft: 10,
+    paddingRight: 20,
+    paddingLeft: 20
   },
   searchContainer: {
     width: "60%",
