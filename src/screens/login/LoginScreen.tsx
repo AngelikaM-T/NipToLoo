@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { Card, TextInput, Button } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
@@ -23,6 +23,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
   return (
     <>
       <SafeAreaView style={loginStyle.screenContent}>
+      <KeyboardAvoidingView behavior="padding" >
         <BrandName navigation={navigation} />
         <View style={loginStyle.loginContent}>
           <View style={loginStyle.card}>
@@ -71,6 +72,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
             </Card>
           </View>
         </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </>
   );

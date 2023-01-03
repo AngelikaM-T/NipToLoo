@@ -1,11 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
 import { TextInput, Button, Card } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import CustomInput from "../../components/CustomInput";
 import { Header } from "../../components/Header";
 import { useForm } from "react-hook-form";
+
 
 interface RegisterScreenProps {
   navigation: any;
@@ -22,6 +23,7 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
   return (
     <View style={registerStyle.background}>
       <SafeAreaView>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <ScrollView>
           <View style={registerStyle.screenContent}>
             <BrandName navigation={navigation} />
@@ -95,12 +97,16 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
             </View>
           </View>
         </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </View>
   );
 };
 
 const registerStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   background: {
     backgroundColor: "#9ec6cc",
     height: "100%",
