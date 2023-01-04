@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Marker, Callout } from "react-native-maps";
+import { postToilet } from "../config/api/api";
 
 const InfoMarker = ({
   location,
@@ -12,6 +13,7 @@ const InfoMarker = ({
   setMarkerCoords,
 }) => {
   const markerHandler = (coords = null) => {
+    postToilet(location);
     setMarkerCoords(coords);
   };
 
@@ -59,11 +61,10 @@ const InfoMarker = ({
   );
 };
 
-
 const styles = StyleSheet.create({
   callout: {
     backgroundColor: "white",
-  }
+  },
 });
 
 export default InfoMarker;

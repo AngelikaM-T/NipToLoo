@@ -1,13 +1,23 @@
-import React from "react";
-import { Linking, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
 import { Overlay } from "@rneui/base";
+import { getReviewsByToilet } from "../config/api/api";
+import { Linking, ScrollView, StyleSheet, Text, View } from "react-native";
 import LoginButton from "./LoginButton";
 import { Button, Card, List, Paragraph, Title } from "react-native-paper";
 import { BrandName } from "./BrandName";
 import { Header } from "./Header";
 import { useNavigation } from "@react-navigation/native";
 
+interface Reviews {
+  body: String;
+  username: String;
+  place_id: String;
+}
+
 const Overlays = ({ stateObj, navigation }) => {
+  const [reviews, setReviews] = useState<Reviews[]>([]);
+  console.log(reviews);
+
   const {
     toiletCardVisible,
     targetedToilet,
@@ -51,6 +61,12 @@ const Overlays = ({ stateObj, navigation }) => {
       setTargetedToilet(matchingToilet);
     }
   };
+
+  useEffect(() => {
+    getReviewsByToilet(location.place_id).then((reviews) => {
+      setReviews(reviews!);
+    });
+  }, []);
 
   const loginScreen = () => {
     setReviewCardVisible(!reviewCardVisible);
