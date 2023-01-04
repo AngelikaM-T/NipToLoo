@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { Marker, Callout } from "react-native-maps";
 
 const InfoMarker = ({
@@ -45,6 +45,7 @@ const InfoMarker = ({
       pinColor="#590074"
     >
       <Callout
+        style={styles.callout}
         onPress={() => {
           toggleToiletCard(markerCoords);
         }}
@@ -57,5 +58,12 @@ const InfoMarker = ({
     </Marker>
   );
 };
+
+
+const styles = StyleSheet.create({
+  callout: {
+    backgroundColor: "white",
+  }
+});
 
 export default InfoMarker;
