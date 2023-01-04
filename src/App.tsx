@@ -4,12 +4,11 @@ import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import AppNavigator from "./navigation/AppNavigator";
 
 export default function App() {
-
   return (
     <>
-        <PaperProvider theme={theme}>
-          <AppNavigator />
-        </PaperProvider>
+      <PaperProvider theme={theme}>
+        <AppNavigator />
+      </PaperProvider>
     </>
   );
 }

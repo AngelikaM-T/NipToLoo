@@ -49,3 +49,15 @@ export const getReviewsByToilet = (toilet_id: String) => {
 export const postReviewsByToilet = (toilet_id: String, review: Object) => {
   return toiletApi.post(`/toilets/${toilet_id}/reviews`, review);
 };
+
+export const getUsers = () => {
+  return toiletApi.get("/users").then((res) => {
+    return res.data.users;
+  });
+};
+
+export const postUser = (newUser: Object) => {
+  return toiletApi.post("/users", newUser).then((res) => {
+    return res;
+  });
+};

@@ -16,7 +16,6 @@ interface Reviews {
 
 const Overlays = ({ stateObj, navigation }) => {
   const [reviews, setReviews] = useState<Reviews[]>([]);
-  console.log(reviews);
 
   const {
     toiletCardVisible,

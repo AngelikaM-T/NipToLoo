@@ -12,6 +12,7 @@ import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
 import { useForm } from "react-hook-form";
 import CustomInput from "../../components/CustomInput";
+import { getUsers } from "../../config/api/api";
 
 interface LoginScreenProps {
   navigation: any;
@@ -19,10 +20,27 @@ interface LoginScreenProps {
 
 export const LoginScreen = (props: LoginScreenProps) => {
   const navigation = useNavigation();
+  const { control, handleSubmit, getValues } = useForm({ mode: "onBlur" });
 
-  const { control, handleSubmit } = useForm({ mode: "onBlur" });
+  const login = () => {
+    const values = getValues();
+    setTimeout(() => {
+      console.log("");
+    }, 2000);
 
-  const login = () => props.navigation.navigate("Home");
+    getUsers().then((res) => {
+      const user = res.filter((user) => {
+        if (
+          user.email === values.username &&
+          user.password === values.password
+        ) {
+          return user;
+        }
+      });
+      console.log(user);
+    });
+    //props.navigation.navigate("Home");
+  };
 
   const registerPage = () => props.navigation.navigate("Register");
 

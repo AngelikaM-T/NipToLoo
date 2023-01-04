@@ -11,20 +11,24 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "react-native-auth0",
+        {
+          "domain": "dev-10afhtov0kp4ddwi.us.auth0.com"
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
-    "bundleIdentifier": "com.southcoders.locationfinder",
-    "config": {
-      "googleMapsApiKey": "AIzaSyBnu71NLFgm-R1gAWCFqK15U5bPWiArmDo"
-    },
+    "bundleIdentifier": "com.auth0samples",
     "android": {
+      "package": "com.auth0samples",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
