@@ -46,6 +46,19 @@ export const getReviewsByToilet = (toilet_id: String) => {
   });
 };
 
-export const postReviewsByToilet = (toilet_id: String, review: Object) => {
-  return toiletApi.post(`/toilets/${toilet_id}/reviews`, review);
+export const postReviewByToilet = (toilet_id: String, review: String, author: String) => {
+  const reqBody = {
+      body: review,
+      author: author,
+      toilet_id: toilet_id,
+  }
+  return toiletApi.post(`/toilets/${toilet_id}/reviews`, reqBody).then((res) => {
+    console.log(res.data.reviews);
+  });;
+};
+
+export const getUsers = () => {
+  return toiletApi.get(`/users`).then((res) => {
+    return res.data.users;
+  });
 };

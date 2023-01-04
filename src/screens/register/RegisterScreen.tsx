@@ -52,6 +52,18 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                           },
                         }}
                       />
+                       <CustomInput
+                        name="username"
+                        placeholder="Username"
+                        control={control}
+                        rules={{
+                          required: "Username is required",
+                          pattern: {
+                            value: /^[a-z ,.'-]+$/i,
+                            message: "Invalid username",
+                          },
+                        }}
+                      />
                       <CustomInput
                         name="email"
                         placeholder="Email"

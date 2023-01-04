@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
   SafeAreaView,
@@ -12,17 +12,37 @@ import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
 import { useForm } from "react-hook-form";
 import CustomInput from "../../components/CustomInput";
+import { getUsers } from "../../config/api/api";
+import { UserContext } from "../../context/UserContext";
 
 interface LoginScreenProps {
   navigation: any;
 }
 
 export const LoginScreen = (props: LoginScreenProps) => {
+  const [users, setUsers] = useState([]);
   const navigation = useNavigation();
+  const { login } = useContext(UserContext);
 
-  const { control, handleSubmit } = useForm({ mode: "onBlur" });
+  const { control, handleSubmit, getValues } = useForm({ mode: "onBlur" });
 
-  const login = () => props.navigation.navigate("Home");
+  useEffect(() => {
+    getUsers().then((retreivedUsers) => {
+      setUsers(retreivedUsers);
+    });
+  }, []);
+
+  const logInUser = () => {
+    const values = getValues();
+    const email = values.email
+    // login()
+    const loggedInUser = users.find(user => user.email === email)
+    const username = loggedInUser.username
+    login(username, email);
+    props.navigation.goBack();
+  };
+
+  
 
   const registerPage = () => props.navigation.navigate("Register");
 
@@ -37,11 +57,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
                 <Card.Content>
                   <Header title="Log in" />
                   <CustomInput
-                    name="username"
-                    placeholder="Username"
+                    name="email"
+                    placeholder="Email"
                     control={control}
                     rules={{
-                      required: "Username is required",
+                      required: "Email is required",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: "Invalid email address",
@@ -65,7 +85,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     Forgot email/password
                   </Button>
                   <Button
-                    onPress={handleSubmit(login)}
+                    onPress={handleSubmit(logInUser)}
                     mode="contained"
                     style={loginStyle.cardButton}
                   >
