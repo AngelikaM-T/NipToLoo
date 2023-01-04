@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Overlay } from "@rneui/base";
 import { getReviewsByToilet } from "../config/api/api";
-import { Linking, ScrollView, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Linking, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import LoginButton from "./LoginButton";
 import { Button, Card, List, Paragraph, Title } from "react-native-paper";
 import { BrandName } from "./BrandName";
 import { Header } from "./Header";
 import { useNavigation } from "@react-navigation/native";
+import UserContext from "../context/UserContext";
+import ReviewInput from "./ReviewInput";
 
 interface Reviews {
   body: String;
@@ -15,6 +17,8 @@ interface Reviews {
 }
 
 const Overlays = ({ stateObj, navigation }) => {
+  const { isLoggedIn, login, logout } = useContext(UserContext);
+
   const [reviews, setReviews] = useState<Reviews[]>([]);
   console.log(reviews);
 
@@ -75,6 +79,7 @@ const Overlays = ({ stateObj, navigation }) => {
 
   return (
     <>
+ 
       <Overlay
         isVisible={toiletCardVisible}
         onBackdropPress={toggleToiletCard}
@@ -119,6 +124,10 @@ const Overlays = ({ stateObj, navigation }) => {
         onBackdropPress={toggleReviewCard}
         overlayStyle={styles.reviews}
       >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <ScrollView keyboardShouldPersistTaps={"handled"}>
         <View style={styles.overlayContent}>
           <BrandName navigation={navigation} stateObj={stateObj} />
           <View style={styles.cardContent}>
@@ -140,13 +149,19 @@ const Overlays = ({ stateObj, navigation }) => {
                       />
                     </ScrollView>
                   </List.Section>
-                  <Button
+                  {!isLoggedIn && (
+                    <Button
                     uppercase={false}
                     style={styles.loginButton}
-                    onPress={loginScreen}
+                    onPress={login}
                   >
                     Login/register to leave a review
                   </Button>
+                  )}
+                    {isLoggedIn && (
+                    <ReviewInput />
+                  )}
+
                   <Button
                     mode="contained"
                     onPress={toggleReviewCard}
@@ -159,7 +174,10 @@ const Overlays = ({ stateObj, navigation }) => {
             </View>
           </View>
         </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
       </Overlay>
+ 
     </>
   );
 };
