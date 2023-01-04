@@ -43,8 +43,8 @@ export const HomeScreen = () => {
   const [reviewCardVisible, setReviewCardVisible] = useState(false);
   const [markerCoords, setMarkerCoords] = useState({});
   const [location, setLocation] = useState<Coords>({
-    latitude: 53.483959,
-    longitude: -2.244644,
+    latitude: 53.483475,
+    longitude: -2.241518,
   });
   const [currentLocation, setCurrentLocation] = useState<Coords>({
     latitude: null,
@@ -83,7 +83,9 @@ export const HomeScreen = () => {
     setLoadingToilets(true);
     fetchLocations(location).then((retreivedToilets) => {
       setToiletLocations(retreivedToilets!);
-      setLoadingToilets(false);
+      setTimeout(() => {
+        setLoadingToilets(false);
+      }, 5000);
     });
   }, [location]);
 
@@ -92,7 +94,7 @@ export const HomeScreen = () => {
       {loadingToilets ? <AppLoader /> : null}
       <View style={styles.container}>
         <ToiletMap stateObj={stateObj} />
-        <Overlays stateObj={stateObj} navigation={navigation}/>
+        <Overlays stateObj={stateObj} navigation={navigation} />
         <PlaceSearch stateObj={stateObj} navigation={navigation} />
       </View>
     </>
