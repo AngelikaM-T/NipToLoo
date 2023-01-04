@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Linking, StyleSheet, Text } from "react-native";
-import { Button, Overlay } from "@rneui/base";
+import { Overlay } from "@rneui/base";
 import { getReviewsByToilet } from "../config/api/api";
+import { Linking, ScrollView, StyleSheet, Text, View } from "react-native";
 import LoginButton from "./LoginButton";
+import { Button, Card, List, Paragraph, Title } from "react-native-paper";
+import { BrandName } from "./BrandName";
+import { Header } from "./Header";
+import { useNavigation } from "@react-navigation/native";
 
 interface Reviews {
   body: String;
@@ -64,53 +68,148 @@ const Overlays = ({ stateObj, navigation }) => {
     });
   }, []);
 
+  const loginScreen = () => {
+    setReviewCardVisible(!reviewCardVisible);
+    navigation.navigate("Login");
+  };
+
   return (
     <>
       <Overlay
         isVisible={toiletCardVisible}
         onBackdropPress={toggleToiletCard}
-        overlayStyle={styles.container2}
+        overlayStyle={styles.container}
       >
-        <Text>Name: {targetedToilet?.name}</Text>
-        <Text>Status: {targetedToilet?.business_status}</Text>
-        <Text>Address: {targetedToilet?.formatted_address}</Text>
-        <Button title="Get directions" onPress={getWalkingDirections}></Button>
-        <Text> </Text>
-        <Button
-          title="See reviews of this toilet"
-          onPress={toggleReviewCard}
-        ></Button>
+        <View style={styles.overlayContent}>
+          <BrandName navigation={navigation} stateObj={stateObj} />
+          <View style={styles.cardContent}>
+            <View style={styles.card}>
+              <Card>
+                <Card.Content>
+                  <Title>{targetedToilet?.name}</Title>
+                  <Paragraph>
+                    Status: {targetedToilet?.business_status}
+                  </Paragraph>
+                  <Paragraph>
+                    Address: {targetedToilet?.formatted_address}
+                  </Paragraph>
+                  <Paragraph>Rating: {targetedToilet?.rating}</Paragraph>
+                  <Button
+                    mode="contained"
+                    onPress={getWalkingDirections}
+                    style={styles.button}
+                  >
+                    Get directions
+                  </Button>
+                  <Button
+                    mode="contained"
+                    onPress={toggleReviewCard}
+                    style={styles.button}
+                  >
+                    Reviews
+                  </Button>
+                </Card.Content>
+              </Card>
+            </View>
+          </View>
+        </View>
       </Overlay>
       <Overlay
         isVisible={reviewCardVisible}
         onBackdropPress={toggleReviewCard}
-        overlayStyle={styles.reviewList}
+        overlayStyle={styles.reviews}
       >
-        <Text>Name: {targetedToilet?.name}</Text>
-        <Text>Rating: {targetedToilet?.rating}</Text>
-        <LoginButton navigation={navigation} />
-        <Button title="Go back" onPress={toggleReviewCard}></Button>
+        <View style={styles.overlayContent}>
+          <BrandName navigation={navigation} stateObj={stateObj} />
+          <View style={styles.cardContent}>
+            <View style={styles.card}>
+              <Card>
+                <Card.Content>
+                  <Title>{targetedToilet?.name}</Title>
+                  <Paragraph>
+                    Address: {targetedToilet?.formatted_address}
+                  </Paragraph>
+                  <Paragraph>Rating: {targetedToilet?.rating}</Paragraph>
+                  <List.Section>
+                    <List.Subheader>Reviews</List.Subheader>
+                    <ScrollView>
+                      <List.Item title="username1" description="first review" />
+                      <List.Item
+                        title="username2"
+                        description="second review"
+                      />
+                    </ScrollView>
+                  </List.Section>
+                  <Button
+                    uppercase={false}
+                    style={styles.loginButton}
+                    onPress={loginScreen}
+                  >
+                    Login/register to leave a review
+                  </Button>
+                  <Button
+                    mode="contained"
+                    onPress={toggleReviewCard}
+                    style={styles.button}
+                  >
+                    Back to loo
+                  </Button>
+                </Card.Content>
+              </Card>
+            </View>
+          </View>
+        </View>
       </Overlay>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container2: {
-    backgroundColor: "white",
-    borderColor: "black",
+  container: {
+    backgroundColor: "#9ec6cc",
+    borderColor: "#9ec6cc",
     borderWidth: 2,
-    width: 250,
-    height: 400,
+    borderRadius: 20,
+    width: "80%",
+    height: "55%",
   },
-
-  reviewList: {
-    backgroundColor: "white",
-    borderColor: "black",
+  reviews: {
+    backgroundColor: "#9ec6cc",
+    borderColor: "#9ec6cc",
     borderWidth: 2,
-    width: 250,
-    height: 400,
+    borderRadius: 20,
+    width: "90%",
+    height: "80%",
     zIndex: 10,
+  },
+  overlayContent: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  cardContent: {
+    display: "flex",
+    flex: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  card: {
+    width: "95%",
+    height: "100%",
+    margin: 5,
+  },
+  loginButton: {
+    margin: 2,
+    marginLeft: 0,
+    marginRight: 0,
+  },
+  button: {
+    margin: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 

@@ -1,6 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { TextInput, Button, Card } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import CustomInput from "../../components/CustomInput";
@@ -22,85 +29,92 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
   return (
     <View style={registerStyle.background}>
       <SafeAreaView>
-        <ScrollView>
-          <View style={registerStyle.screenContent}>
-            <BrandName navigation={navigation} />
-            <View style={registerStyle.registerContent}>
-              <View style={registerStyle.card}>
-                <Card>
-                  <Card.Content>
-                    <Header title="Register" />
-                    <CustomInput
-                      name="name"
-                      placeholder="Name"
-                      control={control}
-                      rules={{
-                        required: "Name is required",
-                        pattern: {
-                          value: /^[a-z ,.'-]+$/i,
-                          message: "Invalid name",
-                        },
-                      }}
-                    />
-                    <CustomInput
-                      name="email"
-                      placeholder="Email"
-                      control={control}
-                      rules={{
-                        required: "Email is required",
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Invalid email address",
-                        },
-                      }}
-                    />
-                    <CustomInput
-                      name="password"
-                      placeholder="Password"
-                      control={control}
-                      rules={{
-                        required: "Password is required",
-                        minLength: {
-                          value: 8,
-                          message:
-                            "Password should be minimum 8 characters long",
-                        },
-                        pattern: {
-                          value:
-                            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-                          message:
-                            "Password must contain at least one number and one special character",
-                        },
-                      }}
-                    />
-                    <CustomInput
-                      name="confirm_password"
-                      placeholder="Confirm password"
-                      control={control}
-                      rules={{
-                        validate: (value) =>
-                          value === pwd || "Passwords do not match",
-                      }}
-                    />
-                    <Button
-                      onPress={handleSubmit(registerNewUser)}
-                      mode="contained"
-                      style={registerStyle.button}
-                    >
-                      Register
-                    </Button>
-                  </Card.Content>
-                </Card>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <ScrollView keyboardShouldPersistTaps={"handled"}>
+            <View style={registerStyle.screenContent}>
+              <BrandName navigation={navigation} />
+              <View style={registerStyle.registerContent}>
+                <View style={registerStyle.card}>
+                  <Card>
+                    <Card.Content>
+                      <Header title="Register" />
+                      <CustomInput
+                        name="name"
+                        placeholder="Name"
+                        control={control}
+                        rules={{
+                          required: "Name is required",
+                          pattern: {
+                            value: /^[a-z ,.'-]+$/i,
+                            message: "Invalid name",
+                          },
+                        }}
+                      />
+                      <CustomInput
+                        name="email"
+                        placeholder="Email"
+                        control={control}
+                        rules={{
+                          required: "Email is required",
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Invalid email address",
+                          },
+                        }}
+                      />
+                      <CustomInput
+                        name="password"
+                        placeholder="Password"
+                        control={control}
+                        rules={{
+                          required: "Password is required",
+                          minLength: {
+                            value: 8,
+                            message:
+                              "Password should be minimum 8 characters long",
+                          },
+                          pattern: {
+                            value:
+                              /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+                            message:
+                              "Password must contain at least one number and one special character",
+                          },
+                        }}
+                      />
+                      <CustomInput
+                        name="confirm_password"
+                        placeholder="Confirm password"
+                        control={control}
+                        rules={{
+                          validate: (value) =>
+                            value === pwd || "Passwords do not match",
+                        }}
+                      />
+                      <Button
+                        onPress={handleSubmit(registerNewUser)}
+                        mode="contained"
+                        style={registerStyle.button}
+                      >
+                        Register
+                      </Button>
+                    </Card.Content>
+                  </Card>
+                </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </View>
   );
 };
 
 const registerStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   background: {
     backgroundColor: "#9ec6cc",
     height: "100%",
@@ -123,9 +137,6 @@ const registerStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-  },
-  icon: {
-    color: "#005691",
   },
   button: {
     margin: 15,

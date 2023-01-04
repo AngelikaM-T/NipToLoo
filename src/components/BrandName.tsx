@@ -3,10 +3,15 @@ import { Appbar } from "react-native-paper";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export const BrandName = (props: { navigation: any }) => {
-  const { navigation } = props;
+export const BrandName = ({ navigation, stateObj = null }) => {
+  const goHome = () => {
+    if (stateObj) {
+      stateObj.setToiletCardVisible(false);
+      stateObj.setReviewCardVisible(false);
+    }
 
-  const goHome = () => navigation.navigate("Home");
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={brandStyle.imageContainer}>
