@@ -1,6 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, View, KeyboardAvoidingView } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Card, TextInput, Button } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
@@ -23,55 +29,55 @@ export const LoginScreen = (props: LoginScreenProps) => {
   return (
     <>
       <SafeAreaView style={loginStyle.screenContent}>
-      <KeyboardAvoidingView behavior="padding" >
-        <BrandName navigation={navigation} />
-        <View style={loginStyle.loginContent}>
-          <View style={loginStyle.card}>
-            <Card>
-              <Card.Content>
-                <Header title="Log in" />
-                <CustomInput
-                  name="username"
-                  placeholder="Username"
-                  control={control}
-                  rules={{
-                    required: "Username is required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  }}
-                />
+        <KeyboardAvoidingView behavior="padding">
+          <BrandName navigation={navigation} />
+          <View style={loginStyle.loginContent}>
+            <View style={loginStyle.card}>
+              <Card>
+                <Card.Content>
+                  <Header title="Log in" />
+                  <CustomInput
+                    name="username"
+                    placeholder="Username"
+                    control={control}
+                    rules={{
+                      required: "Username is required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address",
+                      },
+                    }}
+                  />
 
-                <CustomInput
-                  name="password"
-                  placeholder="Password"
-                  control={control}
-                  rules={{
-                    required: "Password is required",
-                    minLength: {
-                      value: 8,
-                      message: "Password should be minimum 8 characters long",
-                    },
-                  }}
-                />
-                <Button uppercase={false} style={loginStyle.cardButton}>
-                  Forgot email/password
-                </Button>
-                <Button
-                  onPress={handleSubmit(login)}
-                  mode="contained"
-                  style={loginStyle.cardButton}
-                >
-                  Log in
-                </Button>
-                <Button onPress={registerPage} style={loginStyle.cardButton}>
-                  Register
-                </Button>
-              </Card.Content>
-            </Card>
+                  <CustomInput
+                    name="password"
+                    placeholder="Password"
+                    control={control}
+                    rules={{
+                      required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password should be minimum 8 characters long",
+                      },
+                    }}
+                  />
+                  <Button uppercase={false} style={loginStyle.cardButton}>
+                    Forgot email/password
+                  </Button>
+                  <Button
+                    onPress={handleSubmit(login)}
+                    mode="contained"
+                    style={loginStyle.cardButton}
+                  >
+                    Log in
+                  </Button>
+                  <Button onPress={registerPage} style={loginStyle.cardButton}>
+                    Register
+                  </Button>
+                </Card.Content>
+              </Card>
+            </View>
           </View>
-        </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </>
