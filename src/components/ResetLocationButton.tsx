@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Button } from "react-native-paper";
-import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import React from "react";
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 interface CurRegion {
   latitude: number;
@@ -11,6 +9,8 @@ interface CurRegion {
 }
 
 const CurrentLocationButton = ({ currentLocation, setLocation }) => {
+  
+
   const onPressCurrentLocation = () => {
     setLocation(currentLocation);
   };
