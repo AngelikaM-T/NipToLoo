@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   Alert,
   SafeAreaView,
@@ -13,33 +13,36 @@ import { Header } from "../../components/Header";
 import { useForm } from "react-hook-form";
 import CustomInput from "../../components/CustomInput";
 import { getUsers } from "../../config/api/api";
+import { UserContext } from "../../context/userContext";
 
 interface LoginScreenProps {
   navigation: any;
 }
 
 export const LoginScreen = (props: LoginScreenProps) => {
+  const { user, setUser } = useContext(UserContext);
+
   const navigation = useNavigation();
   const { control, handleSubmit, getValues } = useForm({ mode: "onBlur" });
 
   const login = () => {
-    const values = getValues();
-    setTimeout(() => {
-      console.log("");
-    }, 2000);
-
     getUsers().then((res) => {
-      const user = res.filter((user) => {
+      const values = getValues();
+      const foundUser = res.filter((user) => {
         if (
           user.email === values.username &&
           user.password === values.password
         ) {
           return user;
+        } else {
+          return false;
         }
       });
-      console.log(user);
+      if (foundUser !== false) {
+        setUser(foundUser[0]);
+        props.navigation.navigate("Home");
+      }
     });
-    //props.navigation.navigate("Home");
   };
 
   const registerPage = () => props.navigation.navigate("Register");

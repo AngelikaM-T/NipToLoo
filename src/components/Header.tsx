@@ -6,7 +6,7 @@ export const Header = (props: HeaderParams) => {
   const navigation = useNavigation();
 
   const goBack = () => navigation.goBack();
-  
+
   return (
     <Appbar>
       <Appbar.BackAction onPress={goBack} />

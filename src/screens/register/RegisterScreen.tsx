@@ -39,10 +39,9 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
       username: values.name,
       email: values.email,
       password: values.password,
-    }).then((res) => {
-      console.log(res);
+    }).then(() => {
+      props.navigation.navigate("Login");
     });
-    props.navigation.navigate("Login");
   };
 
   return (
