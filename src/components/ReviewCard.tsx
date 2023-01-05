@@ -81,7 +81,7 @@ const ReviewCard = ({
                             return (
                               <List.Item
                                 title={review?.author}
-                                description={[review?.body, review?.created_at]}
+                                description={[review?.body]}
                                 key={index}
                               />
                             );

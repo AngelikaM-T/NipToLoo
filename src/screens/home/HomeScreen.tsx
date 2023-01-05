@@ -83,7 +83,9 @@ export const HomeScreen = () => {
     setLoadingToilets(true);
     fetchLocations(location).then((retreivedToilets) => {
       setToiletLocations(retreivedToilets!);
-      setLoadingToilets(false);
+      setTimeout(() => {
+        setLoadingToilets(false);
+      }, 4000);
     });
   }, [location]);
 

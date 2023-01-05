@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_API_KEY } from "../../environments";
@@ -11,6 +11,7 @@ Geocoder.init(GOOGLE_API_KEY);
 
 const PlaceSearch = ({ stateObj, navigation }) => {
   const { setLocation, currentLocation } = stateObj;
+  const googlePlacesRef = useRef(null);
 
   const onPressHandler = (data, details = null) => {
     Geocoder.from(data.description).then((json) => {
@@ -20,6 +21,7 @@ const PlaceSearch = ({ stateObj, navigation }) => {
         longitude: newLocation ? newLocation.lng! : 0,
       };
       setLocation(newLocationObj);
+      googlePlacesRef.current.clear();
     });
   };
 
@@ -28,6 +30,7 @@ const PlaceSearch = ({ stateObj, navigation }) => {
       <View style={styles.headerContainer}>
         <View style={styles.searchContainer}>
           <GooglePlacesAutocomplete
+            ref={googlePlacesRef}
             placeholder="Enter Location"
             onPress={onPressHandler}
             query={{

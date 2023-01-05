@@ -47,7 +47,6 @@ const InfoMarker = ({
       pinColor="#590074"
     >
       <Callout
-        style={styles.callout}
         onPress={() => {
           toggleToiletCard(markerCoords);
         }}
@@ -60,11 +59,5 @@ const InfoMarker = ({
     </Marker>
   );
 };
-
-const styles = StyleSheet.create({
-  callout: {
-    backgroundColor: "white",
-  },
-});
 
 export default InfoMarker;
