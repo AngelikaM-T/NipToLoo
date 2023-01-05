@@ -18,19 +18,12 @@ import { useNavigation } from "@react-navigation/native";
 import ReviewInput from "./ReviewInput";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../context/UserContext";
+import ReviewCard from "./ReviewCard";
 
-interface Reviews {
-  body: String;
-  username: String;
-  place_id: String;
-}
+
 
 const Overlays = ({ stateObj, navigation }) => {
-  const { isLoggedIn, login, logout, user } = useContext(UserContext);
-
-  const [reviews, setReviews] = useState<Reviews[]>([]);
-
-  const { handleSubmit } = useForm();
+  const [reviewCardToilet, setReviewCardToilet] = useState({})
 
   const {
     toiletCardVisible,
@@ -73,19 +66,11 @@ const Overlays = ({ stateObj, navigation }) => {
         }
       }
       setTargetedToilet(matchingToilet);
+      setReviewCardToilet(matchingToilet);
     }
   };
 
-  useEffect(() => {
-    getReviewsByToilet(location.place_id).then((reviews) => {
-      setReviews(reviews!);
-    });
-  }, []);
 
-  const loginScreen = () => {
-    setReviewCardVisible(!reviewCardVisible);
-    navigation.navigate("Login");
-  };
 
   return (
     <>
@@ -128,65 +113,7 @@ const Overlays = ({ stateObj, navigation }) => {
           </View>
         </View>
       </Overlay>
-      <Overlay
-        isVisible={reviewCardVisible}
-        onBackdropPress={toggleReviewCard}
-        overlayStyle={styles.reviews}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <ScrollView keyboardShouldPersistTaps={"handled"}>
-            <View style={styles.overlayContent}>
-              <BrandName navigation={navigation} stateObj={stateObj} />
-              <View style={styles.cardContent}>
-                <View style={styles.card}>
-                  <Card>
-                    <Card.Content>
-                      <Title>{targetedToilet?.name}</Title>
-                      <Paragraph>
-                        Address: {targetedToilet?.formatted_address}
-                      </Paragraph>
-                      <Paragraph>Rating: {targetedToilet?.rating}</Paragraph>
-                      <List.Section>
-                        <List.Subheader>Reviews</List.Subheader>
-                        <ScrollView>
-                          <List.Item
-                            title="username1"
-                            description="first review"
-                          />
-                          <List.Item
-                            title="username2"
-                            description="second review"
-                          />
-                        </ScrollView>
-                      </List.Section>
-                      {!isLoggedIn && (
-                        <Button
-                          uppercase={false}
-                          style={styles.loginButton}
-                          onPress={handleSubmit(loginScreen)}
-                        >
-                          Login/register to leave a review
-                        </Button>
-                      )}
-                      {isLoggedIn && <ReviewInput stateObj={stateObj} />}
-
-                      <Button
-                        mode="contained"
-                        onPress={toggleReviewCard}
-                        style={styles.button}
-                      >
-                        Back to loo
-                      </Button>
-                    </Card.Content>
-                  </Card>
-                </View>
-              </View>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </Overlay>
+      <ReviewCard toggleReviewCard={toggleReviewCard} setReviewCardVisible={setReviewCardVisible} reviewCardVisible={reviewCardVisible} reviewCardToilet={reviewCardToilet} navigation={navigation} stateObj={stateObj}/>
     </>
   );
 };

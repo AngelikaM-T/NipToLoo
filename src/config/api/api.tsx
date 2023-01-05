@@ -49,11 +49,10 @@ export const getReviewsByToilet = (toilet_id: String) => {
 export const postReviewByToilet = (toilet_id: String, review: String, author: String) => {
   const reqBody = {
       body: review,
-      author: author,
-      toilet_id: toilet_id,
+      username: author,
   }
   return toiletApi.post(`/toilets/${toilet_id}/reviews`, reqBody).then((res) => {
-    console.log(res.data.reviews);
+    return res.data.review;
   });;
 };
 
