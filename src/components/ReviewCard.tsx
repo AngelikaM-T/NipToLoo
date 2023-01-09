@@ -21,14 +21,20 @@ interface Reviews {
   created_at: String;
 }
 
-const ReviewCard = ({
+interface Props {
+  toggleReviewCard: any;
+  navigation: any;
+  stateObj: any;
+}
+
+const ReviewCard: React.FC<Props> = ({
   toggleReviewCard,
-  setReviewCardVisible,
-  reviewCardVisible,
-  reviewCardToilet,
   navigation,
   stateObj,
 }) => {
+  const { reviewCardToilet, reviewCardVisible, setReviewCardVisible } =
+    stateObj;
+
   const { isLoggedIn, login, logout, user } = useContext(UserContext);
   const [reviews, setReviews] = useState<Reviews[]>([]);
 
@@ -96,7 +102,6 @@ const ReviewCard = ({
                       {isLoggedIn && (
                         <ReviewInput
                           stateObj={stateObj}
-                          reviews={reviews}
                           setReviews={setReviews}
                         />
                       )}
@@ -158,9 +163,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   loginButton: {
-    margin: 2,
-    marginLeft: 0,
-    marginRight: 0,
+    margin: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
   button: {
     margin: 10,

@@ -4,8 +4,9 @@ import { Button } from "react-native-paper";
 import { postReviewByToilet } from "../config/api/api";
 import { UserContext } from "../context/UserContext";
 import CustomInput from "./CustomInput";
+import { StyleSheet } from "react-native";
 
-const ReviewInput = ({ stateObj, reviews, setReviews }) => {
+const ReviewInput = ({ stateObj, setReviews }) => {
   const { targetedToilet } = stateObj;
   const { control, handleSubmit, getValues, reset } = useForm({
     mode: "onBlur",
@@ -30,7 +31,9 @@ const ReviewInput = ({ stateObj, reviews, setReviews }) => {
         newReviews.unshift(reviewFromApi);
         return newReviews;
       });
-    });
+    }).then(() => {
+      reset();
+    })
   };
 
   return (
@@ -51,11 +54,19 @@ const ReviewInput = ({ stateObj, reviews, setReviews }) => {
           },
         }}
       />
-      <Button mode="contained" onPress={handleSubmit(postReview)}>
+      <Button mode="contained" style={styles.button} onPress={handleSubmit(postReview)}>
         Submit
       </Button>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    margin: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+});
 
 export default ReviewInput;
