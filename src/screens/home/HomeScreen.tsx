@@ -3,7 +3,6 @@ import { StyleSheet, View, Text } from "react-native";
 import * as Location from "expo-location";
 import { fetchLocations } from "../../config/api/api";
 import PlaceSearch from "../../components/PlaceSearch";
-import LocationMarker from "../../components/LocationMarker";
 import Overlays from "../../components/Overlays";
 import ToiletMap from "../../components/ToiletMap";
 import AppLoader from "../../components/AppLoader";
@@ -37,7 +36,6 @@ export const HomeScreen = () => {
   const [loadingToilets, setLoadingToilets] = useState<boolean>(true);
   const [toiletLocations, setToiletLocations] = useState<Toilet[]>([]);
   const [errorMsg, setErrorMsg] = useState<String | null>(null);
-  const [userLogin, setUserLogin] = useState<boolean>(false);
   const [targetedToilet, setTargetedToilet] = useState(null);
   const [toiletCardVisible, setToiletCardVisible] = useState(false);
   const [reviewCardVisible, setReviewCardVisible] = useState(false);
@@ -94,7 +92,7 @@ export const HomeScreen = () => {
       {loadingToilets ? <AppLoader /> : null}
       <View style={styles.container}>
         <ToiletMap stateObj={stateObj} />
-        <Overlays stateObj={stateObj} navigation={navigation}/>
+        <Overlays stateObj={stateObj} navigation={navigation} />
         <PlaceSearch stateObj={stateObj} navigation={navigation} />
       </View>
     </>

@@ -7,9 +7,7 @@ interface LoginScreenProps {
   navigation: any;
 }
 
-
 const ToiletMap = ({ stateObj }, props: LoginScreenProps) => {
-  
   const {
     location,
     toiletLocations,

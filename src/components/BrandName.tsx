@@ -1,7 +1,5 @@
 import React from "react";
-import { Appbar } from "react-native-paper";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 export const BrandName = ({ navigation, stateObj = null }) => {
   const goHome = () => {

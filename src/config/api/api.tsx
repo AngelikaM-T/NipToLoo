@@ -46,14 +46,20 @@ export const getReviewsByToilet = (toilet_id: String) => {
   });
 };
 
-export const postReviewByToilet = (toilet_id: String, review: String, author: String) => {
+export const postReviewByToilet = (
+  toilet_id: String,
+  review: String,
+  author: String
+) => {
   const reqBody = {
-      body: review,
-      username: author,
-  }
-  return toiletApi.post(`/toilets/${toilet_id}/reviews`, reqBody).then((res) => {
-    return res.data.review;
-  });;
+    body: review,
+    username: author,
+  };
+  return toiletApi
+    .post(`/toilets/${toilet_id}/reviews`, reqBody)
+    .then((res) => {
+      return res.data.review;
+    });
 };
 
 export const getUsers = () => {

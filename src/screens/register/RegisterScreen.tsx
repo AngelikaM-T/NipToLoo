@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { TextInput, Button, Card } from "react-native-paper";
+import { Button, Card } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import CustomInput from "../../components/CustomInput";
 import { Header } from "../../components/Header";
@@ -52,7 +52,7 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
                           },
                         }}
                       />
-                       <CustomInput
+                      <CustomInput
                         name="username"
                         placeholder="Username"
                         control={control}

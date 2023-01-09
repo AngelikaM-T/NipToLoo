@@ -1,13 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import {
-  Alert,
   SafeAreaView,
   StyleSheet,
   View,
   KeyboardAvoidingView,
 } from "react-native";
-import { Card, TextInput, Button } from "react-native-paper";
+import { Card, Button } from "react-native-paper";
 import { BrandName } from "../../components/BrandName";
 import { Header } from "../../components/Header";
 import { useForm } from "react-hook-form";
@@ -34,15 +33,12 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
   const logInUser = () => {
     const values = getValues();
-    const email = values.email
-    // login()
-    const loggedInUser = users.find(user => user.email === email)
-    const username = loggedInUser.username
+    const email = values.email;
+    const loggedInUser = users.find((user) => user.email === email);
+    const username = loggedInUser.username;
     login(username, email);
     props.navigation.goBack();
   };
-
-  
 
   const registerPage = () => props.navigation.navigate("Register");
 

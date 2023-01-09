@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import { UserProvider } from "./context/UserProvider";
 import AppNavigator from "./navigation/AppNavigator";
 import { LogBox } from "react-native";
+
 LogBox.ignoreAllLogs(true);
 
 export default function App() {

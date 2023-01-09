@@ -1,29 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { Overlay } from "@rneui/base";
-import { getReviewsByToilet } from "../config/api/api";
-import {
-  KeyboardAvoidingView,
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import LoginButton from "./LoginButton";
-import { Button, Card, List, Paragraph, Title } from "react-native-paper";
+import { Linking, StyleSheet, View } from "react-native";
+import { Button, Card, Paragraph, Title } from "react-native-paper";
 import { BrandName } from "./BrandName";
-import { Header } from "./Header";
-import { useNavigation } from "@react-navigation/native";
-import ReviewInput from "./ReviewInput";
-import { useForm } from "react-hook-form";
-import { UserContext } from "../context/UserContext";
 import ReviewCard from "./ReviewCard";
 
-
-
 const Overlays = ({ stateObj, navigation }) => {
-  const [reviewCardToilet, setReviewCardToilet] = useState({})
+  const [reviewCardToilet, setReviewCardToilet] = useState({});
 
   const {
     toiletCardVisible,
@@ -70,8 +53,6 @@ const Overlays = ({ stateObj, navigation }) => {
     }
   };
 
-
-
   return (
     <>
       <Overlay
@@ -113,7 +94,14 @@ const Overlays = ({ stateObj, navigation }) => {
           </View>
         </View>
       </Overlay>
-      <ReviewCard toggleReviewCard={toggleReviewCard} setReviewCardVisible={setReviewCardVisible} reviewCardVisible={reviewCardVisible} reviewCardToilet={reviewCardToilet} navigation={navigation} stateObj={stateObj}/>
+      <ReviewCard
+        toggleReviewCard={toggleReviewCard}
+        setReviewCardVisible={setReviewCardVisible}
+        reviewCardVisible={reviewCardVisible}
+        reviewCardToilet={reviewCardToilet}
+        navigation={navigation}
+        stateObj={stateObj}
+      />
     </>
   );
 };

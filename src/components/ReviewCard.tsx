@@ -6,14 +6,10 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
-import LoginButton from "./LoginButton";
 import { Button, Card, List, Paragraph, Title } from "react-native-paper";
 import { BrandName } from "./BrandName";
-import { Header } from "./Header";
-import { useNavigation } from "@react-navigation/native";
 import ReviewInput from "./ReviewInput";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../context/UserContext";
@@ -97,7 +93,13 @@ const ReviewCard = ({
                           Login/register to leave a review
                         </Button>
                       )}
-                      {isLoggedIn && <ReviewInput stateObj={stateObj} reviews={reviews} setReviews={setReviews} />}
+                      {isLoggedIn && (
+                        <ReviewInput
+                          stateObj={stateObj}
+                          reviews={reviews}
+                          setReviews={setReviews}
+                        />
+                      )}
 
                       <Button
                         mode="contained"

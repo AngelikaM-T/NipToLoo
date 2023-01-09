@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { KeyboardAvoidingView, View } from "react-native";
 import { Button } from "react-native-paper";
 import { postReviewByToilet } from "../config/api/api";
 import { UserContext } from "../context/UserContext";
@@ -20,7 +19,6 @@ const ReviewInput = ({ stateObj, reviews, setReviews }) => {
   });
 
   const postReview = () => {
-    //api logic here
     const values = getValues();
     const review = values.review;
     const author = user.username;

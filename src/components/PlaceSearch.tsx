@@ -5,7 +5,6 @@ import { GOOGLE_API_KEY } from "../../environments";
 import Geocoder from "react-native-geocoding";
 import CurrentLocationButton from "./ResetLocationButton";
 import LoginButton from "./LoginButton";
-import { NavigationContext } from "@react-navigation/native";
 
 Geocoder.init(GOOGLE_API_KEY);
 
