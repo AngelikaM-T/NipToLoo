@@ -67,3 +67,10 @@ export const getUsers = () => {
     return res.data.users;
   });
 };
+
+export const postUser = (newUser: Object) => {
+   return toiletApi.post("/users", newUser).then((res) => {
+     return res;
+   });
+ };
+

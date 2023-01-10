@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -13,6 +13,9 @@ import { BrandName } from "../../components/BrandName";
 import CustomInput from "../../components/CustomInput";
 import { Header } from "../../components/Header";
 import { useForm } from "react-hook-form";
+import { postUser } from "../../config/api/api";
+import { UserContext } from "../../context/UserContext";
+
 
 interface RegisterScreenProps {
   navigation: any;
@@ -20,11 +23,30 @@ interface RegisterScreenProps {
 
 export const RegisterScreen = (props: RegisterScreenProps) => {
   const navigation = useNavigation();
+  const { login } = useContext(UserContext);
 
-  const { control, handleSubmit, watch } = useForm({ mode: "onBlur" });
+
+  const { control, handleSubmit, watch, getValues } = useForm({ mode: "onBlur" });
   const pwd = watch("password");
 
-  const registerNewUser = () => props.navigation.navigate("Login");
+  const registerNewUser = () => {
+    const values = getValues();
+
+    setTimeout(() => {
+      console.log("");
+    }, 2000);
+
+    postUser({
+      username: values.name,
+      email: values.email,
+      password: values.password,
+    }).then((res) => {
+      const username = res.data.username;
+      const email = res.data.email;
+      login(username, email);
+    });
+    props.navigation.navigate("Home");
+  };
 
   return (
     <View style={registerStyle.background}>
