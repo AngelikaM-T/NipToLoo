@@ -1,11 +1,25 @@
-import React from "react";
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
-const UserContext = React.createContext({
+type User = {
+    username: string,
+    email: string
+}
+
+export interface UserState {
+    isLoggedIn: boolean;
+    login: (username: string, password: string) => void;
+    logout: () => void;
+    user: User;
+  }
+  
+  const defaultLoginState: UserState = {
     isLoggedIn: false,
     login: () => {},
-    logout: () => {}
-  });
+    logout: () => {},
+    user: {username: "", email: ""}
+  };
+  
+  export const UserContext = createContext(defaultLoginState);
 
-export default UserContext;
+
 

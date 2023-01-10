@@ -17,7 +17,10 @@ const CurrentLocationButton = ({ currentLocation, setLocation }) => {
 
   return (
     <View>
-      <TouchableOpacity style={styles.buttonStyle} onPress={onPressCurrentLocation}>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={onPressCurrentLocation}
+      >
         <Image
           style={styles.iconStyle}
           source={require("../assets/reset-location.png")}
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     color: "white",
-    borderRadius: 20
+    borderRadius: 20,
   },
 });
 
